@@ -6,11 +6,12 @@ export default async function MusicPage() {
 
   return (
     <PageLayoutClient posts={posts}>
-      <div className="max-w-3xl mx-auto py-8 px-6">
-        <h1 className="text-[32px] font-semibold text-[#ececec] mb-6">music</h1>
-        <div className="text-[#ececec] text-[16px] leading-relaxed">
-          <p>Music I love listening to!</p>
-        </div>
+      <div className="min-w-[768px] max-w-3xl py-8 px-6 ml-60">
+        <h1 className="text-[32px] font-semibold text-[#ececec] mb-2">music</h1>
+        <p className="text-[#9a9a9a] text-[16px] mb-8">
+          Music I love listening to!
+        </p>
+        <div className="h-16" />
       </div>
     </PageLayoutClient>
   );

@@ -6,12 +6,12 @@ export default async function AboutMePage() {
 
   return (
     <PageLayoutClient posts={posts}>
-      <div className="max-w-3xl mx-auto py-8 px-6">
-        <h1 className="text-[32px] font-semibold text-[#ececec] mb-6">about me</h1>
-        <div className="text-[#ececec] text-[16px] leading-relaxed">
-          <p>Welcome to my about page!
-          </p>
-        </div>
+      <div className="min-w-[768px] max-w-3xl py-8 px-6 ml-60">
+        <h1 className="text-[32px] font-semibold text-[#ececec] mb-2">about me</h1>
+        <p className="text-[#9a9a9a] text-[16px] mb-8">
+          Welcome to my about page!
+        </p>
+        <div className="h-16" />
       </div>
     </PageLayoutClient>
   );

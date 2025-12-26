@@ -6,11 +6,12 @@ export default async function PeoplePage() {
 
   return (
     <PageLayoutClient posts={posts}>
-      <div className="max-w-3xl mx-auto py-8 px-6">
-        <h1 className="text-[32px] font-semibold text-[#ececec] mb-6">people</h1>
-        <div className="text-[#ececec] text-[16px] leading-relaxed">
-          <p>People I admire and follow!</p>
-        </div>
+      <div className="min-w-[768px] max-w-3xl py-8 px-6 ml-60">
+        <h1 className="text-[32px] font-semibold text-[#ececec] mb-2">people</h1>
+        <p className="text-[#9a9a9a] text-[16px] mb-8">
+          People I admire and follow!
+        </p>
+        <div className="h-16" />
       </div>
     </PageLayoutClient>
   );
