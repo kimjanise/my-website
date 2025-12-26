@@ -152,13 +152,13 @@ export default function Home() {
       {sidebarOpen ? (
         <aside className="w-[260px] h-full bg-[#171717] flex flex-col flex-shrink-0">
           {/* Sidebar Header */}
-          <div className="flex items-center justify-between px-3 py-4">
-            <div className="text-white cursor-pointer">
+          <div className="flex items-center justify-between px-2 py-3">
+            <div className="text-white cursor-pointer p-2">
               <OpenAILogo />
             </div>
             <button
               onClick={() => setSidebarOpen(false)}
-              className="text-[#9a9a9a] cursor-pointer hover:text-white transition-colors"
+              className="text-[#9a9a9a] cursor-pointer hover:text-white transition-colors p-2"
             >
               <SidebarToggleIcon />
             </button>
@@ -299,10 +299,10 @@ export default function Home() {
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col bg-[#212121]">
         {/* Top Header */}
-        <header className="flex items-center justify-between px-3 py-3">
+        <header className="flex items-center justify-between px-3 py-1.5">
           <div className="flex items-center">
             <div className="flex items-center gap-1 cursor-pointer hover:bg-[#2f2f2f] px-3 py-2 rounded-lg transition-colors">
-              <span className="text-[#ececec] font-semibold text-[17px]">ChatGPT 5.2</span>
+              <span className="text-[#ececec] font-semibold text-[18px]">ChatGPT 5.2</span>
               <ChevronDownIcon />
             </div>
           </div>
@@ -318,7 +318,7 @@ export default function Home() {
         </header>
 
         {/* Main Content */}
-        <div className="flex-1 flex flex-col items-center justify-center px-4 -mt-16">
+        <div className="flex-1 flex flex-col items-center justify-center px-4 -mt-32">
           <h1 className="text-[32px] font-normal text-[#ececec] mb-8 tracking-tight">
             What&apos;s on the agenda today?
           </h1>
