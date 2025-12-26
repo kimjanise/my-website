@@ -164,13 +164,30 @@ export function Sidebar({ posts }: SidebarProps) {
           onMouseEnter={() => setLogoHovered(true)}
           onMouseLeave={() => setLogoHovered(false)}
         >
-          <Link
-            href="/"
-            onClick={stopPropagation}
-            className={`text-white cursor-pointer p-2 rounded-lg transition-colors ${isOpen ? 'hover:bg-[#424242]' : 'hover:bg-[#2f2f2f]'}`}
-          >
-            {!isOpen && logoHovered ? <SidebarToggleIcon /> : <OpenAILogo />}
-          </Link>
+          {isOpen ? (
+            <Link
+              href="/"
+              onClick={stopPropagation}
+              className="text-white cursor-pointer p-2 rounded-lg transition-colors hover:bg-[#424242]"
+            >
+              <OpenAILogo />
+            </Link>
+          ) : logoHovered ? (
+            <button
+              onClick={(e) => { e.stopPropagation(); toggle(); }}
+              className="text-white cursor-pointer p-2 rounded-lg transition-colors hover:bg-[#2f2f2f]"
+            >
+              <SidebarToggleIcon />
+            </button>
+          ) : (
+            <Link
+              href="/"
+              onClick={stopPropagation}
+              className="text-white cursor-pointer p-2 rounded-lg transition-colors hover:bg-[#2f2f2f]"
+            >
+              <OpenAILogo />
+            </Link>
+          )}
         </div>
         {isOpen && (
           <div className="flex-1 flex justify-end pr-2">
