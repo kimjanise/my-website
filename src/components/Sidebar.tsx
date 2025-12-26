@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { BlogPostSummary } from '@/types/blog';
 import { useSidebar } from '@/context/SidebarContext';
+import { LuPencil, LuUser, LuCode, LuMonitor, LuUsers, LuUtensils, LuMusic, LuLandmark } from 'react-icons/lu';
 
 // OpenAI Logo Icon
 const OpenAILogo = () => (
@@ -18,73 +19,6 @@ const SidebarToggleIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" strokeWidth="1.5" fill="none" />
     <path d="M9 4v16" stroke="currentColor" strokeWidth="1.5" />
-  </svg>
-);
-
-// New Chat / Edit Icon
-const EditIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M6 20h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>
-);
-
-// Search Icon
-const SearchIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-// Sparkle Icon
-const SparkleIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5 3l.5 2L7 5.5 5.5 6 5 8l-.5-2L3 5.5 4.5 5 5 3z" fill="currentColor" />
-    <path d="M12 5l.75 3L16 8.75 12.75 9.5 12 12.5l-.75-3L8 8.75 11.25 8 12 5z" fill="currentColor" />
-    <path d="M19 8l.5 2 1.5.5-1.5.5-.5 2-.5-2-1.5-.5 1.5-.5.5-2z" fill="currentColor" />
-    <path d="M8 14l.5 2 1.5.5-1.5.5-.5 2-.5-2-1.5-.5 1.5-.5.5-2z" fill="currentColor" />
-  </svg>
-);
-
-// Image Icon
-const ImageIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-// Apps Icon
-const AppsIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="7" cy="7" r="2" fill="currentColor" />
-    <circle cx="17" cy="7" r="2" fill="currentColor" />
-    <circle cx="7" cy="17" r="2" fill="currentColor" />
-    <circle cx="17" cy="17" r="2" fill="currentColor" />
-  </svg>
-);
-
-// Codex Icon
-const CodexIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
-    <circle cx="9" cy="10" r="1" fill="currentColor" />
-    <circle cx="15" cy="10" r="1" fill="currentColor" />
-    <path d="M8.5 14.5c.83 1 2.08 1.5 3.5 1.5s2.67-.5 3.5-1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>
-);
-
-// GPTs Icon
-const GPTsIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-    <path d="M12 6.5L7 9.5v5l5 3 5-3v-5l-5-3z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-  </svg>
-);
-
-// Projects Icon
-const ProjectsIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -199,14 +133,14 @@ export function Sidebar({ posts }: SidebarProps) {
 
       {/* Navigation */}
       <nav className="flex flex-col mt-3">
-        <NavItem href="/" icon={<EditIcon />} label="new chat" isOpen={isOpen} onClick={stopPropagation} />
-        <NavItem href="/about-me" icon={<SearchIcon />} label="about me" isOpen={isOpen} onClick={stopPropagation} />
-        <NavItem href="/projects" icon={<SparkleIcon />} label="projects" isOpen={isOpen} onClick={stopPropagation} />
-        <NavItem href="/tech" icon={<ImageIcon />} label="tech" badge="NEW" isOpen={isOpen} onClick={stopPropagation} />
-        <NavItem href="/people" icon={<AppsIcon />} label="people" isOpen={isOpen} onClick={stopPropagation} />
-        <NavItem href="/eats" icon={<CodexIcon />} label="eats" isOpen={isOpen} onClick={stopPropagation} />
-        <NavItem href="/music" icon={<GPTsIcon />} label="music" isOpen={isOpen} onClick={stopPropagation} />
-        <NavItem href="/museums" icon={<ProjectsIcon />} label="museums" isOpen={isOpen} onClick={stopPropagation} />
+        <NavItem href="/" icon={<LuPencil size={20} />} label="new chat" isOpen={isOpen} onClick={stopPropagation} />
+        <NavItem href="/about-me" icon={<LuUser size={20} />} label="about me" isOpen={isOpen} onClick={stopPropagation} />
+        <NavItem href="/projects" icon={<LuCode size={20} />} label="projects" isOpen={isOpen} onClick={stopPropagation} />
+        <NavItem href="/tech" icon={<LuMonitor size={20} />} label="tech" badge="NEW" isOpen={isOpen} onClick={stopPropagation} />
+        <NavItem href="/people" icon={<LuUsers size={20} />} label="people" isOpen={isOpen} onClick={stopPropagation} />
+        <NavItem href="/eats" icon={<LuUtensils size={20} />} label="eats" isOpen={isOpen} onClick={stopPropagation} />
+        <NavItem href="/music" icon={<LuMusic size={20} />} label="music" isOpen={isOpen} onClick={stopPropagation} />
+        <NavItem href="/museums" icon={<LuLandmark size={20} />} label="museums" isOpen={isOpen} onClick={stopPropagation} />
       </nav>
 
       {/* Recent thoughts - only visible when open */}

@@ -92,7 +92,7 @@ export function HomeClient({ posts }: HomeClientProps) {
               <input
                 ref={inputRef}
                 type="text"
-                placeholder="ask me about myself"
+                placeholder="ask me about what i'm up to"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 className="flex-1 bg-transparent border-none outline-none text-[#ececec] text-[15px] placeholder:text-[#8e8e8e]"
