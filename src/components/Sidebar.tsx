@@ -171,7 +171,8 @@ export function Sidebar({ posts }: SidebarProps) {
 
       {/* Profile */}
       <div className="mt-auto">
-        <div
+        <a
+          href="mailto:janiseskim@gmail.com"
           onClick={stopPropagation}
           className={`flex items-center rounded-lg cursor-pointer transition-colors relative z-10 ${isOpen ? 'mx-2 mb-3 py-2 hover:bg-[#212121]' : 'justify-center py-3 hover:bg-[#2f2f2f]'}`}
         >
@@ -185,10 +186,10 @@ export function Sidebar({ posts }: SidebarProps) {
           {isOpen && (
             <div className="flex flex-col">
               <span className="text-[14px] text-[#ececec]">janise kim</span>
-              <span className="text-[12px] text-[#9a9a9a]">Plus</span>
+              <span className="text-[12px] text-[#9a9a9a]">click me to reach out!</span>
             </div>
           )}
-        </div>
+        </a>
       </div>
     </aside>
   );
