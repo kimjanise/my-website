@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { BlogPostSummary } from '@/types/blog';
+import { useSidebar } from '@/context/SidebarContext';
 
 // OpenAI Logo Icon
 const OpenAILogo = () => (
@@ -89,11 +90,52 @@ const ProjectsIcon = () => (
 
 interface SidebarProps {
   posts: BlogPostSummary[];
-  isOpen: boolean;
-  onToggle: () => void;
 }
 
-export function Sidebar({ posts, isOpen, onToggle }: SidebarProps) {
+interface NavItemProps {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+  badge?: string;
+  isOpen: boolean;
+  onClick?: (e: React.MouseEvent) => void;
+}
+
+const NavItem = ({ href, icon, label, badge, isOpen, onClick }: NavItemProps) => (
+  <div className={`flex items-center h-[32px] ${isOpen ? '' : 'justify-center'}`}>
+    <Link
+      href={href}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick?.(e);
+      }}
+      className={`flex items-center text-[#ececec] rounded-lg cursor-pointer transition-colors relative z-10 ${
+        isOpen ? 'hover:bg-[#212121] h-[32px] w-full' : 'hover:bg-[#2f2f2f] w-[32px] h-[32px] justify-center'
+      }`}
+    >
+      {isOpen ? (
+        <>
+          <div className="w-[52px] h-full flex items-center justify-center flex-shrink-0">
+            {icon}
+          </div>
+          <div className="flex items-center gap-1 pr-3">
+            <span className="text-[15px] whitespace-nowrap">{label}</span>
+            {badge && (
+              <span className="text-[11px] bg-[#3a3a3a] text-[#a0a0a0] px-2 py-0.5 rounded-full font-medium uppercase">
+                {badge}
+              </span>
+            )}
+          </div>
+        </>
+      ) : (
+        icon
+      )}
+    </Link>
+  </div>
+);
+
+export function Sidebar({ posts }: SidebarProps) {
+  const { isOpen, toggle } = useSidebar();
   const pathname = usePathname();
   const currentSlug = pathname.startsWith('/blog/')
     ? pathname.replace('/blog/', '')
@@ -102,9 +144,11 @@ export function Sidebar({ posts, isOpen, onToggle }: SidebarProps) {
 
   const handleSidebarClick = () => {
     if (!isOpen) {
-      onToggle();
+      toggle();
     }
   };
+
+  const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();
 
   return (
     <aside
@@ -114,145 +158,42 @@ export function Sidebar({ posts, isOpen, onToggle }: SidebarProps) {
       }`}
     >
       {/* Header */}
-      <div className={`flex items-center py-3 ${isOpen ? 'justify-between px-2' : 'justify-center'}`}>
-        {isOpen ? (
-          <>
-            <Link href="/" onClick={(e) => e.stopPropagation()} className="text-white cursor-pointer p-2 hover:bg-[#424242] rounded-lg transition-colors">
-              <OpenAILogo />
-            </Link>
+      <div className="flex items-center h-[52px]">
+        <div
+          className="w-[52px] flex items-center justify-center flex-shrink-0 relative z-10"
+          onMouseEnter={() => setLogoHovered(true)}
+          onMouseLeave={() => setLogoHovered(false)}
+        >
+          <Link
+            href="/"
+            onClick={stopPropagation}
+            className={`text-white cursor-pointer p-2 rounded-lg transition-colors ${isOpen ? 'hover:bg-[#424242]' : 'hover:bg-[#2f2f2f]'}`}
+          >
+            {!isOpen && logoHovered ? <SidebarToggleIcon /> : <OpenAILogo />}
+          </Link>
+        </div>
+        {isOpen && (
+          <div className="flex-1 flex justify-end pr-2">
             <button
-              onClick={(e) => { e.stopPropagation(); onToggle(); }}
+              onClick={(e) => { e.stopPropagation(); toggle(); }}
               className="cursor-pointer hover:bg-[#424242] p-2 rounded-lg transition-colors text-[#9a9a9a] hover:text-white"
             >
               <SidebarToggleIcon />
             </button>
-          </>
-        ) : (
-          <div
-            className="text-white p-2 rounded-lg transition-colors hover:bg-[#424242]"
-            onMouseEnter={() => setLogoHovered(true)}
-            onMouseLeave={() => setLogoHovered(false)}
-          >
-            {logoHovered ? <SidebarToggleIcon /> : <OpenAILogo />}
           </div>
         )}
       </div>
 
       {/* Navigation */}
-      <nav className={`flex flex-col mt-3 ${isOpen ? 'px-2' : 'items-center'}`}>
-        {isOpen ? (
-          <Link
-            href="/"
-            className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <EditIcon />
-            <span className="text-[15px] whitespace-nowrap">new chat</span>
-          </Link>
-        ) : (
-          <div className="flex items-center p-1.5 justify-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
-            <EditIcon />
-          </div>
-        )}
-        {isOpen ? (
-          <Link
-            href="/about-me"
-            className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <SearchIcon />
-            <span className="text-[15px] whitespace-nowrap">about me</span>
-          </Link>
-        ) : (
-          <div className="flex items-center p-1.5 justify-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
-            <SearchIcon />
-          </div>
-        )}
-        {isOpen ? (
-          <Link
-            href="/projects"
-            className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <SparkleIcon />
-            <span className="text-[15px] whitespace-nowrap">projects</span>
-          </Link>
-        ) : (
-          <div className="flex items-center p-1.5 justify-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
-            <SparkleIcon />
-          </div>
-        )}
-        {isOpen ? (
-          <Link
-            href="/tech"
-            className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <ImageIcon />
-            <span className="text-[15px] whitespace-nowrap">tech</span>
-            <span className="text-[11px] bg-[#3a3a3a] text-[#a0a0a0] px-2 py-0.5 rounded-full font-medium uppercase ml-1">NEW</span>
-          </Link>
-        ) : (
-          <div className="flex items-center p-1.5 justify-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
-            <ImageIcon />
-          </div>
-        )}
-        {isOpen ? (
-          <Link
-            href="/people"
-            className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <AppsIcon />
-            <span className="text-[15px] whitespace-nowrap">people</span>
-          </Link>
-        ) : (
-          <div className="flex items-center p-1.5 justify-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
-            <AppsIcon />
-          </div>
-        )}
-        {isOpen ? (
-          <Link
-            href="/eats"
-            className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <CodexIcon />
-            <span className="text-[15px] whitespace-nowrap">eats</span>
-          </Link>
-        ) : (
-          <div className="flex items-center p-1.5 justify-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
-            <CodexIcon />
-          </div>
-        )}
-        {isOpen ? (
-          <Link
-            href="/music"
-            className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <GPTsIcon />
-            <span className="text-[15px] whitespace-nowrap">music</span>
-          </Link>
-        ) : (
-          <div className="flex items-center p-1.5 justify-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
-            <GPTsIcon />
-          </div>
-        )}
-        {isOpen ? (
-          <Link
-            href="/museums"
-            className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <ProjectsIcon />
-            <span className="text-[15px] whitespace-nowrap">museums</span>
-          </Link>
-        ) : (
-          <div className="flex items-center p-1.5 justify-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
-            <ProjectsIcon />
-          </div>
-        )}
+      <nav className="flex flex-col mt-3">
+        <NavItem href="/" icon={<EditIcon />} label="new chat" isOpen={isOpen} onClick={stopPropagation} />
+        <NavItem href="/about-me" icon={<SearchIcon />} label="about me" isOpen={isOpen} onClick={stopPropagation} />
+        <NavItem href="/projects" icon={<SparkleIcon />} label="projects" isOpen={isOpen} onClick={stopPropagation} />
+        <NavItem href="/tech" icon={<ImageIcon />} label="tech" badge="NEW" isOpen={isOpen} onClick={stopPropagation} />
+        <NavItem href="/people" icon={<AppsIcon />} label="people" isOpen={isOpen} onClick={stopPropagation} />
+        <NavItem href="/eats" icon={<CodexIcon />} label="eats" isOpen={isOpen} onClick={stopPropagation} />
+        <NavItem href="/music" icon={<GPTsIcon />} label="music" isOpen={isOpen} onClick={stopPropagation} />
+        <NavItem href="/museums" icon={<ProjectsIcon />} label="museums" isOpen={isOpen} onClick={stopPropagation} />
       </nav>
 
       {/* Recent thoughts - only visible when open */}
@@ -266,7 +207,7 @@ export function Sidebar({ posts, isOpen, onToggle }: SidebarProps) {
               <Link
                 key={post.id}
                 href={`/blog/${post.slug}`}
-                onClick={(e) => e.stopPropagation()}
+                onClick={stopPropagation}
                 className={`block px-3 py-1.5 rounded-lg cursor-pointer transition-colors ${
                   currentSlug === post.slug
                     ? 'bg-[#2f2f2f] text-[#ececec]'
@@ -284,15 +225,18 @@ export function Sidebar({ posts, isOpen, onToggle }: SidebarProps) {
       {!isOpen && <div className="flex-1" />}
 
       {/* Profile */}
-      <div className={`mt-auto ${isOpen ? 'p-3' : 'py-3 flex justify-center'}`}>
-        <div className={`flex items-center hover:bg-[#212121] rounded-lg cursor-pointer transition-colors ${
-          isOpen ? 'gap-3 px-2 py-2' : 'p-0'
-        }`}>
-          <img
-            src="/profile.png"
-            alt="Profile"
-            className="w-9 h-9 rounded-full object-cover"
-          />
+      <div className="mt-auto">
+        <div
+          onClick={stopPropagation}
+          className={`flex items-center rounded-lg cursor-pointer transition-colors relative z-10 ${isOpen ? 'mx-2 mb-3 py-2 hover:bg-[#212121]' : 'justify-center py-3 hover:bg-[#2f2f2f]'}`}
+        >
+          <div className="w-[52px] flex items-center justify-center flex-shrink-0">
+            <img
+              src="/profile.png"
+              alt="Profile"
+              className="w-9 h-9 rounded-full object-cover"
+            />
+          </div>
           {isOpen && (
             <div className="flex flex-col">
               <span className="text-[14px] text-[#ececec]">janise kim</span>

@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { Sidebar } from './Sidebar';
 import type { BlogPostSummary } from '@/types/blog';
 
@@ -29,15 +28,9 @@ interface PageLayoutClientProps {
 }
 
 export function PageLayoutClient({ posts, children }: PageLayoutClientProps) {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-
   return (
     <div className="flex h-screen w-full bg-[#212121]">
-      <Sidebar
-        posts={posts}
-        isOpen={sidebarOpen}
-        onToggle={() => setSidebarOpen(!sidebarOpen)}
-      />
+      <Sidebar posts={posts} />
       <main className="flex-1 flex flex-col bg-[#212121] overflow-hidden">
         <header className="flex items-center justify-between px-3 py-1.5">
           <div className="flex items-center">
