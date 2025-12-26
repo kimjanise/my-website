@@ -117,11 +117,11 @@ export function Sidebar({ posts, isOpen, onToggle }: SidebarProps) {
       <div className={`flex items-center py-3 ${isOpen ? 'justify-between px-2' : 'justify-center'}`}>
         {isOpen ? (
           <>
-            <Link href="/" className="text-white cursor-pointer p-2 hover:bg-[#424242] rounded-lg transition-colors">
+            <Link href="/" onClick={(e) => e.stopPropagation()} className="text-white cursor-pointer p-2 hover:bg-[#424242] rounded-lg transition-colors">
               <OpenAILogo />
             </Link>
             <button
-              onClick={onToggle}
+              onClick={(e) => { e.stopPropagation(); onToggle(); }}
               className="cursor-pointer hover:bg-[#424242] p-2 rounded-lg transition-colors text-[#9a9a9a] hover:text-white"
             >
               <SidebarToggleIcon />
@@ -154,53 +154,105 @@ export function Sidebar({ posts, isOpen, onToggle }: SidebarProps) {
             <EditIcon />
           </div>
         )}
-        <div className={`flex items-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors ${
-          isOpen ? 'gap-3 px-3 py-1.5' : 'p-1.5 justify-center'
-        }`}>
-          <SearchIcon />
-          {isOpen && <span className="text-[15px] whitespace-nowrap">about me</span>}
-        </div>
-        <div className={`flex items-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors ${
-          isOpen ? 'gap-3 px-3 py-1.5' : 'p-1.5 justify-center'
-        }`}>
-          <SparkleIcon />
-          {isOpen && <span className="text-[15px] whitespace-nowrap">projects</span>}
-        </div>
-        <div className={`flex items-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors ${
-          isOpen ? 'gap-3 px-3 py-1.5' : 'p-1.5 justify-center'
-        }`}>
-          <ImageIcon />
-          {isOpen && (
-            <>
-              <span className="text-[15px] whitespace-nowrap">tech inspo</span>
-              <span className="text-[11px] bg-[#3a3a3a] text-[#a0a0a0] px-2 py-0.5 rounded-full font-medium uppercase ml-1">NEW</span>
-            </>
-          )}
-        </div>
-        <div className={`flex items-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors ${
-          isOpen ? 'gap-3 px-3 py-1.5' : 'p-1.5 justify-center'
-        }`}>
-          <AppsIcon />
-          {isOpen && <span className="text-[15px] whitespace-nowrap">people</span>}
-        </div>
-        <div className={`flex items-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors ${
-          isOpen ? 'gap-3 px-3 py-1.5' : 'p-1.5 justify-center'
-        }`}>
-          <CodexIcon />
-          {isOpen && <span className="text-[15px] whitespace-nowrap">eats</span>}
-        </div>
-        <div className={`flex items-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors ${
-          isOpen ? 'gap-3 px-3 py-1.5' : 'p-1.5 justify-center'
-        }`}>
-          <GPTsIcon />
-          {isOpen && <span className="text-[15px] whitespace-nowrap">music</span>}
-        </div>
-        <div className={`flex items-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors ${
-          isOpen ? 'gap-3 px-3 py-1.5' : 'p-1.5 justify-center'
-        }`}>
-          <ProjectsIcon />
-          {isOpen && <span className="text-[15px] whitespace-nowrap">museums</span>}
-        </div>
+        {isOpen ? (
+          <Link
+            href="/about-me"
+            className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <SearchIcon />
+            <span className="text-[15px] whitespace-nowrap">about me</span>
+          </Link>
+        ) : (
+          <div className="flex items-center p-1.5 justify-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
+            <SearchIcon />
+          </div>
+        )}
+        {isOpen ? (
+          <Link
+            href="/projects"
+            className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <SparkleIcon />
+            <span className="text-[15px] whitespace-nowrap">projects</span>
+          </Link>
+        ) : (
+          <div className="flex items-center p-1.5 justify-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
+            <SparkleIcon />
+          </div>
+        )}
+        {isOpen ? (
+          <Link
+            href="/tech"
+            className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <ImageIcon />
+            <span className="text-[15px] whitespace-nowrap">tech</span>
+            <span className="text-[11px] bg-[#3a3a3a] text-[#a0a0a0] px-2 py-0.5 rounded-full font-medium uppercase ml-1">NEW</span>
+          </Link>
+        ) : (
+          <div className="flex items-center p-1.5 justify-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
+            <ImageIcon />
+          </div>
+        )}
+        {isOpen ? (
+          <Link
+            href="/people"
+            className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <AppsIcon />
+            <span className="text-[15px] whitespace-nowrap">people</span>
+          </Link>
+        ) : (
+          <div className="flex items-center p-1.5 justify-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
+            <AppsIcon />
+          </div>
+        )}
+        {isOpen ? (
+          <Link
+            href="/eats"
+            className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <CodexIcon />
+            <span className="text-[15px] whitespace-nowrap">eats</span>
+          </Link>
+        ) : (
+          <div className="flex items-center p-1.5 justify-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
+            <CodexIcon />
+          </div>
+        )}
+        {isOpen ? (
+          <Link
+            href="/music"
+            className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <GPTsIcon />
+            <span className="text-[15px] whitespace-nowrap">music</span>
+          </Link>
+        ) : (
+          <div className="flex items-center p-1.5 justify-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
+            <GPTsIcon />
+          </div>
+        )}
+        {isOpen ? (
+          <Link
+            href="/museums"
+            className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <ProjectsIcon />
+            <span className="text-[15px] whitespace-nowrap">museums</span>
+          </Link>
+        ) : (
+          <div className="flex items-center p-1.5 justify-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
+            <ProjectsIcon />
+          </div>
+        )}
       </nav>
 
       {/* Recent thoughts - only visible when open */}
@@ -214,6 +266,7 @@ export function Sidebar({ posts, isOpen, onToggle }: SidebarProps) {
               <Link
                 key={post.id}
                 href={`/blog/${post.slug}`}
+                onClick={(e) => e.stopPropagation()}
                 className={`block px-3 py-1.5 rounded-lg cursor-pointer transition-colors ${
                   currentSlug === post.slug
                     ? 'bg-[#2f2f2f] text-[#ececec]'
