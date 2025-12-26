@@ -102,7 +102,7 @@ interface NavItemProps {
 }
 
 const NavItem = ({ href, icon, label, badge, isOpen, onClick }: NavItemProps) => (
-  <div className={`flex items-center h-[32px] ${isOpen ? '' : 'justify-center'}`}>
+  <div className={`flex items-center h-[32px] ${isOpen ? 'px-2' : 'justify-center'}`}>
     <Link
       href={href}
       onClick={(e) => {
@@ -110,7 +110,7 @@ const NavItem = ({ href, icon, label, badge, isOpen, onClick }: NavItemProps) =>
         onClick?.(e);
       }}
       className={`flex items-center text-[#ececec] rounded-lg cursor-pointer transition-colors relative z-10 ${
-        isOpen ? 'hover:bg-[#212121] h-[32px] w-full' : 'hover:bg-[#2f2f2f] w-[32px] h-[32px] justify-center'
+        isOpen ? 'hover:bg-[#212121] h-[32px] flex-1' : 'hover:bg-[#2f2f2f] w-[32px] h-[32px] justify-center'
       }`}
     >
       {isOpen ? (
