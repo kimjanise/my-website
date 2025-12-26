@@ -4,21 +4,73 @@ import { useState, useRef, useEffect } from 'react';
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 
 const categories = [
-  'Top Picks',
-  'Restaurants',
-  'Cafes',
-  'Bars',
-  'Desserts',
-  'Brunch',
-  'Late Night',
-  'Healthy',
+  'restaurants',
+  'bakeries',
+  'coffee + tea',
+  'dessert',
+  'bars',
 ];
 
+type LocationTag = 'nyc' | 'sf' | 'pittsburgh' | 'other';
+
+interface Place {
+  name: string;
+  website?: string;
+  location: LocationTag;
+  favorites: string;
+}
+
+const tagColors: Record<LocationTag, string> = {
+  'nyc': 'bg-blue-500/20 text-blue-400',
+  'sf': 'bg-orange-500/20 text-orange-400',
+  'pittsburgh': 'bg-yellow-500/20 text-yellow-400',
+  'other': 'bg-gray-500/20 text-gray-400',
+};
+
+const categoryContent: Record<string, Place[]> = {
+  'restaurants': [
+    { name: 'cho dang gol', website: 'https://chodanggolnyc.com/', location: 'nyc', favorites: 'cod roe omelet, mini bossam, spicy galbi jjim' },
+    { name: 'shukette', website: 'https://www.shukettenyc.com/', location: 'nyc', favorites: 'frena, not your average hummus, joojeh chicken' },
+    { name: 'mitr thai', website: 'https://www.mitrthainyc.com/', location: 'nyc', favorites: 'roti massaman, pad mhee khorat, short rib prik kang' },
+    { name: 'side a', website: 'https://www.sideasf.com/', location: 'sf', favorites: 'garbage salad, chicken cutlet' },
+    { name: 'mamanoko', website: 'https://www.mamanokosf.com/menu', location: 'sf', favorites: 'mizo glazed cod, kinobi, cookie dough roll' },
+    { name: 'double knot', website: 'https://www.doubleknotphilly.com/', location: 'other', favorites: 'chef\'s tasting menu' },
+    { name: 'the vandal', website: 'https://www.mitrthainyc.com/', location: 'pittsburgh', favorites: 'ddkkd' },
+  ],
+  'bakeries': [
+    { name: 'Example Bakery', location: 'sf', favorites: 'Almond Croissant' },
+  ],
+  'coffee + tea': [
+    { name: 'Example Cafe', location: 'pittsburgh', favorites: 'Oat Milk Latte' },
+  ],
+  'dessert': [
+    { name: 'Example Dessert Shop', location: 'nyc', favorites: 'Matcha Soft Serve' },
+  ],
+  'bars': [
+    { name: 'Example Bar', location: 'other', favorites: 'Espresso Martini' },
+  ],
+};
+
+const locations: LocationTag[] = ['nyc', 'sf', 'pittsburgh', 'other'];
+
 export function EatsClient() {
-  const [activeCategory, setActiveCategory] = useState('Top Picks');
+  const [activeCategory, setActiveCategory] = useState('restaurants');
+  const [activeLocations, setActiveLocations] = useState<LocationTag[]>([]);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const toggleLocation = (location: LocationTag) => {
+    setActiveLocations((prev) =>
+      prev.includes(location)
+        ? prev.filter((l) => l !== location)
+        : [...prev, location]
+    );
+  };
+
+  const filteredPlaces = categoryContent[activeCategory]?.filter(
+    (place) => activeLocations.length === 0 || activeLocations.includes(place.location)
+  );
 
   const checkScrollButtons = () => {
     const container = scrollContainerRef.current;
@@ -75,11 +127,10 @@ export function EatsClient() {
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`relative px-4 py-2 text-[15px] whitespace-nowrap transition-colors ${
-                activeCategory === category
-                  ? 'text-[#ececec]'
-                  : 'text-[#9a9a9a] hover:text-[#ececec]'
-              }`}
+              className={`relative px-4 py-2 text-[15px] whitespace-nowrap transition-colors ${activeCategory === category
+                ? 'text-[#ececec]'
+                : 'text-[#9a9a9a] hover:text-[#ececec]'
+                }`}
             >
               {category}
               {activeCategory === category && (
@@ -99,10 +150,46 @@ export function EatsClient() {
         )}
       </div>
 
-      {/* Content placeholder */}
-      <div className="text-[#ececec]">
-        <h2 className="text-[24px] font-semibold mb-2">{activeCategory}</h2>
-        <p className="text-[#9a9a9a]">Content for {activeCategory} coming soon...</p>
+      {/* Location filter */}
+      <div className="flex gap-2 mb-6">
+        {locations.map((location) => (
+          <button
+            key={location}
+            onClick={() => toggleLocation(location)}
+            className={`text-[12px] px-3 py-1 rounded-full transition-colors ${
+              activeLocations.includes(location)
+                ? tagColors[location]
+                : 'bg-[#2f2f2f] text-[#9a9a9a] hover:text-[#ececec]'
+            }`}
+          >
+            {location}
+          </button>
+        ))}
+      </div>
+
+      {/* Content */}
+      <div className="space-y-3">
+        {filteredPlaces?.map((place, index) => (
+          <div key={index} className="flex items-center gap-3">
+            {place.website ? (
+              <a
+                href={place.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[15px] text-[#ececec] hover:underline"
+              >
+                {place.name}
+              </a>
+            ) : (
+              <span className="text-[15px] text-[#ececec]">{place.name}</span>
+            )}
+            <span className={`text-[12px] px-2 py-0.5 rounded-full ${tagColors[place.location]}`}>
+              {place.location}
+            </span>
+            <span className="text-[20px] text-[#9a9a9a] leading-none">•</span>
+            <span className="text-[14px] text-[#9a9a9a]">{place.favorites}</span>
+          </div>
+        ))}
       </div>
     </div>
   );
