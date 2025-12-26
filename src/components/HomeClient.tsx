@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Sidebar } from './Sidebar';
 import type { BlogPostSummary } from '@/types/blog';
 
@@ -50,6 +50,11 @@ interface HomeClientProps {
 export function HomeClient({ posts }: HomeClientProps) {
   const [inputValue, setInputValue] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   return (
     <div className="flex h-screen w-full bg-[#212121]">
@@ -90,6 +95,7 @@ export function HomeClient({ posts }: HomeClientProps) {
               </button>
 
               <input
+                ref={inputRef}
                 type="text"
                 placeholder="ask me about myself"
                 value={inputValue}

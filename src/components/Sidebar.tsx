@@ -103,7 +103,7 @@ export function Sidebar({ posts, isOpen, onToggle }: SidebarProps) {
       <aside className="w-[52px] h-full bg-[#171717] flex flex-col items-center py-3 flex-shrink-0">
         <button
           onClick={onToggle}
-          className="text-white cursor-pointer hover:bg-[#212121] p-2 rounded-lg transition-colors mb-2"
+          className="text-white cursor-pointer hover:bg-[#424242] p-2 rounded-lg transition-colors mb-2"
         >
           <SidebarToggleIcon />
         </button>
@@ -136,9 +136,11 @@ export function Sidebar({ posts, isOpen, onToggle }: SidebarProps) {
         </div>
 
         <div className="mt-auto cursor-pointer">
-          <div className="w-9 h-9 rounded-full bg-[#e07850] flex items-center justify-center text-white text-xs font-semibold">
-            KI
-          </div>
+          <img
+            src="/profile.png"
+            alt="Profile"
+            className="w-9 h-9 rounded-full object-cover"
+          />
         </div>
       </aside>
     );
@@ -147,12 +149,12 @@ export function Sidebar({ posts, isOpen, onToggle }: SidebarProps) {
   return (
     <aside className="w-[260px] h-full bg-[#171717] flex flex-col flex-shrink-0">
       <div className="flex items-center justify-between px-2 py-3">
-        <div className="text-white cursor-pointer p-2">
+        <Link href="/" className="text-white cursor-pointer p-2 hover:bg-[#424242] rounded-lg transition-colors">
           <OpenAILogo />
-        </div>
+        </Link>
         <button
           onClick={onToggle}
-          className="text-[#9a9a9a] cursor-pointer hover:text-white transition-colors p-2"
+          className="text-[#9a9a9a] cursor-pointer hover:text-white hover:bg-[#424242] rounded-lg transition-colors p-2"
         >
           <SidebarToggleIcon />
         </button>
@@ -217,9 +219,11 @@ export function Sidebar({ posts, isOpen, onToggle }: SidebarProps) {
 
       <div className="p-3 mt-auto">
         <div className="flex items-center gap-3 px-2 py-2 hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
-          <div className="w-9 h-9 rounded-full bg-[#e07850] flex items-center justify-center text-white text-xs font-semibold">
-            KI
-          </div>
+          <img
+            src="/profile.png"
+            alt="Profile"
+            className="w-9 h-9 rounded-full object-cover"
+          />
           <div className="flex flex-col">
             <span className="text-[14px] text-[#ececec]">janise kim</span>
             <span className="text-[12px] text-[#9a9a9a]">Plus</span>
