@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { BlogPostSummary } from '@/types/blog';
 import { useSidebar } from '@/context/SidebarContext';
-import { LuPencil, LuUser, LuCode, LuMonitor, LuUsers, LuUtensils, LuMusic, LuLandmark } from 'react-icons/lu';
+import { LuStar, LuCode, LuMonitor, LuUsers, LuUtensils, LuMusic, LuLandmark } from 'react-icons/lu';
+import { HiOutlinePencilAlt } from 'react-icons/hi';
 
 // OpenAI Logo Icon
 const OpenAILogo = () => (
@@ -43,9 +44,8 @@ const NavItem = ({ href, icon, label, badge, isOpen, onClick }: NavItemProps) =>
         e.stopPropagation();
         onClick?.(e);
       }}
-      className={`flex items-center text-[#ececec] rounded-lg cursor-pointer transition-colors relative z-10 h-[32px] ${
-        isOpen ? 'hover:bg-[#212121] flex-1' : 'hover:bg-[#2f2f2f] w-[32px] justify-center'
-      }`}
+      className={`flex items-center text-[#ececec] rounded-lg cursor-pointer transition-colors relative z-10 h-[32px] ${isOpen ? 'hover:bg-[#212121] flex-1' : 'hover:bg-[#2f2f2f] w-[32px] justify-center'
+        }`}
     >
       <div className={`flex items-center justify-center flex-shrink-0 ${isOpen ? 'w-[32px]' : ''}`}>
         {icon}
@@ -83,9 +83,8 @@ export function Sidebar({ posts }: SidebarProps) {
   return (
     <aside
       onClick={handleSidebarClick}
-      className={`h-full flex flex-col flex-shrink-0 overflow-hidden transition-all duration-300 ease-in-out ${
-        isOpen ? 'w-[260px] bg-[#171717]' : 'w-[52px] bg-transparent border-r border-[#3a3a3a] cursor-pointer'
-      }`}
+      className={`h-full flex flex-col flex-shrink-0 overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'w-[260px] bg-[#171717]' : 'w-[52px] bg-transparent border-r border-[#3a3a3a] cursor-pointer'
+        }`}
     >
       {/* Header */}
       <div className="flex items-center h-[52px]">
@@ -133,8 +132,8 @@ export function Sidebar({ posts }: SidebarProps) {
 
       {/* Navigation */}
       <nav className="flex flex-col mt-3">
-        <NavItem href="/" icon={<LuPencil size={20} />} label="new chat" isOpen={isOpen} onClick={stopPropagation} />
-        <NavItem href="/about-me" icon={<LuUser size={20} />} label="about me" isOpen={isOpen} onClick={stopPropagation} />
+        <NavItem href="/" icon={<HiOutlinePencilAlt size={20} />} label="new chat" isOpen={isOpen} onClick={stopPropagation} />
+        <NavItem href="/about-me" icon={<LuStar size={20} />} label="about me" isOpen={isOpen} onClick={stopPropagation} />
         <NavItem href="/projects" icon={<LuCode size={20} />} label="projects" isOpen={isOpen} onClick={stopPropagation} />
         <NavItem href="/tech" icon={<LuMonitor size={20} />} label="tech" badge="NEW" isOpen={isOpen} onClick={stopPropagation} />
         <NavItem href="/people" icon={<LuUsers size={20} />} label="people" isOpen={isOpen} onClick={stopPropagation} />
@@ -155,11 +154,10 @@ export function Sidebar({ posts }: SidebarProps) {
                 key={post.id}
                 href={`/blog/${post.slug}`}
                 onClick={stopPropagation}
-                className={`block px-3 py-1.5 rounded-lg cursor-pointer transition-colors ${
-                  currentSlug === post.slug
-                    ? 'bg-[#2f2f2f] text-[#ececec]'
-                    : 'text-[#ececec] hover:bg-[#212121]'
-                }`}
+                className={`block px-3 py-1.5 rounded-lg cursor-pointer transition-colors ${currentSlug === post.slug
+                  ? 'bg-[#2f2f2f] text-[#ececec]'
+                  : 'text-[#ececec] hover:bg-[#212121]'
+                  }`}
               >
                 <span className="text-[15px]">{post.title}</span>
               </Link>
