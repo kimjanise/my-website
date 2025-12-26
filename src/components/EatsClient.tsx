@@ -165,6 +165,7 @@ export function EatsClient({ places }: EatsClientProps) {
           </div>
         ))}
       </div>
+      <div className="h-16" />
     </div>
   );
 }

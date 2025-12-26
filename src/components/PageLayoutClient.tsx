@@ -48,7 +48,7 @@ export function PageLayoutClient({ posts, children }: PageLayoutClientProps) {
             </div>
           </div>
         </header>
-        <div className="flex-1 w-full overflow-y-auto flex justify-center">
+        <div className="flex-1 w-full overflow-y-auto flex justify-center pb-16">
           {children}
         </div>
       </main>
