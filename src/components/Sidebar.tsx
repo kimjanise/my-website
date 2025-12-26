@@ -186,7 +186,7 @@ export function Sidebar({ posts }: SidebarProps) {
           {isOpen && (
             <div className="flex flex-col">
               <span className="text-[14px] text-[#ececec]">janise kim</span>
-              <span className="text-[12px] text-[#9a9a9a]">click me to reach out!</span>
+              <span className="text-[12px] text-[#9a9a9a]">click to reach out!</span>
             </div>
           )}
         </a>

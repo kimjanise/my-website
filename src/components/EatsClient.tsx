@@ -2,23 +2,15 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
+import type { Place, LocationTag, EatsCategory } from '@/types/eats';
 
 const categories = [
+  'all',
   'restaurants',
   'bakeries',
   'coffee + tea',
-  'dessert',
   'bars',
-];
-
-type LocationTag = 'nyc' | 'sf' | 'pittsburgh' | 'other';
-
-interface Place {
-  name: string;
-  website?: string;
-  location: LocationTag;
-  favorites: string;
-}
+] as const;
 
 const tagColors: Record<LocationTag, string> = {
   'nyc': 'bg-blue-500/20 text-blue-400',
@@ -27,34 +19,16 @@ const tagColors: Record<LocationTag, string> = {
   'other': 'bg-gray-500/20 text-gray-400',
 };
 
-const categoryContent: Record<string, Place[]> = {
-  'restaurants': [
-    { name: 'cho dang gol', website: 'https://chodanggolnyc.com/', location: 'nyc', favorites: 'cod roe omelet, mini bossam, spicy galbi jjim' },
-    { name: 'shukette', website: 'https://www.shukettenyc.com/', location: 'nyc', favorites: 'frena, not your average hummus, joojeh chicken' },
-    { name: 'mitr thai', website: 'https://www.mitrthainyc.com/', location: 'nyc', favorites: 'roti massaman, pad mhee khorat, short rib prik kang' },
-    { name: 'side a', website: 'https://www.sideasf.com/', location: 'sf', favorites: 'garbage salad, chicken cutlet' },
-    { name: 'mamanoko', website: 'https://www.mamanokosf.com/menu', location: 'sf', favorites: 'mizo glazed cod, kinobi, cookie dough roll' },
-    { name: 'double knot', website: 'https://www.doubleknotphilly.com/', location: 'other', favorites: 'chef\'s tasting menu' },
-    { name: 'the vandal', website: 'https://www.mitrthainyc.com/', location: 'pittsburgh', favorites: 'ddkkd' },
-  ],
-  'bakeries': [
-    { name: 'Example Bakery', location: 'sf', favorites: 'Almond Croissant' },
-  ],
-  'coffee + tea': [
-    { name: 'Example Cafe', location: 'pittsburgh', favorites: 'Oat Milk Latte' },
-  ],
-  'dessert': [
-    { name: 'Example Dessert Shop', location: 'nyc', favorites: 'Matcha Soft Serve' },
-  ],
-  'bars': [
-    { name: 'Example Bar', location: 'other', favorites: 'Espresso Martini' },
-  ],
-};
-
 const locations: LocationTag[] = ['nyc', 'sf', 'pittsburgh', 'other'];
 
-export function EatsClient() {
-  const [activeCategory, setActiveCategory] = useState('restaurants');
+interface EatsClientProps {
+  places: Place[];
+}
+
+type CategoryTab = typeof categories[number];
+
+export function EatsClient({ places }: EatsClientProps) {
+  const [activeCategory, setActiveCategory] = useState<CategoryTab>('all');
   const [activeLocations, setActiveLocations] = useState<LocationTag[]>([]);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
@@ -68,9 +42,10 @@ export function EatsClient() {
     );
   };
 
-  const filteredPlaces = categoryContent[activeCategory]?.filter(
-    (place) => activeLocations.length === 0 || activeLocations.includes(place.location)
-  );
+  // Filter places by category and location
+  const filteredPlaces = places
+    .filter((place) => activeCategory === 'all' || place.category === activeCategory)
+    .filter((place) => activeLocations.length === 0 || activeLocations.includes(place.location));
 
   const checkScrollButtons = () => {
     const container = scrollContainerRef.current;
@@ -156,11 +131,10 @@ export function EatsClient() {
           <button
             key={location}
             onClick={() => toggleLocation(location)}
-            className={`text-[12px] px-3 py-1 rounded-full transition-colors ${
-              activeLocations.includes(location)
-                ? tagColors[location]
-                : 'bg-[#2f2f2f] text-[#9a9a9a] hover:text-[#ececec]'
-            }`}
+            className={`text-[12px] px-3 py-1 rounded-full transition-colors ${activeLocations.includes(location)
+              ? tagColors[location]
+              : 'bg-[#2f2f2f] text-[#9a9a9a] hover:text-[#ececec]'
+              }`}
           >
             {location}
           </button>
@@ -169,8 +143,8 @@ export function EatsClient() {
 
       {/* Content */}
       <div className="space-y-3">
-        {filteredPlaces?.map((place, index) => (
-          <div key={index} className="flex items-center gap-3">
+        {filteredPlaces.map((place) => (
+          <div key={place.id} className="flex items-center gap-3">
             {place.website ? (
               <a
                 href={place.website}
