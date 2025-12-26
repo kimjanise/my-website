@@ -117,7 +117,7 @@ const NavItem = ({ href, icon, label, badge, isOpen, onClick }: NavItemProps) =>
         {icon}
       </div>
       {isOpen && (
-        <div className="flex items-center gap-1 pl-2 pr-3">
+        <div className="flex items-center gap-2 pl-2 pr-3">
           <span className="text-[15px] whitespace-nowrap">{label}</span>
           {badge && (
             <span className="text-[11px] bg-[#3a3a3a] text-[#a0a0a0] px-2 py-0.5 rounded-full font-medium uppercase">
