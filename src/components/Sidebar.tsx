@@ -102,33 +102,29 @@ interface NavItemProps {
 }
 
 const NavItem = ({ href, icon, label, badge, isOpen, onClick }: NavItemProps) => (
-  <div className={`flex items-center h-[32px] ${isOpen ? 'px-2' : 'justify-center'}`}>
+  <div className="flex items-center h-[32px] px-[10px]">
     <Link
       href={href}
       onClick={(e) => {
         e.stopPropagation();
         onClick?.(e);
       }}
-      className={`flex items-center text-[#ececec] rounded-lg cursor-pointer transition-colors relative z-10 ${
-        isOpen ? 'hover:bg-[#212121] h-[32px] flex-1' : 'hover:bg-[#2f2f2f] w-[32px] h-[32px] justify-center'
+      className={`flex items-center text-[#ececec] rounded-lg cursor-pointer transition-colors relative z-10 h-[32px] ${
+        isOpen ? 'hover:bg-[#212121] flex-1' : 'hover:bg-[#2f2f2f] w-[32px] justify-center'
       }`}
     >
-      {isOpen ? (
-        <>
-          <div className="w-[52px] h-full flex items-center justify-center flex-shrink-0">
-            {icon}
-          </div>
-          <div className="flex items-center gap-1 pr-3">
-            <span className="text-[15px] whitespace-nowrap">{label}</span>
-            {badge && (
-              <span className="text-[11px] bg-[#3a3a3a] text-[#a0a0a0] px-2 py-0.5 rounded-full font-medium uppercase">
-                {badge}
-              </span>
-            )}
-          </div>
-        </>
-      ) : (
-        icon
+      <div className={`flex items-center justify-center flex-shrink-0 ${isOpen ? 'w-[32px]' : ''}`}>
+        {icon}
+      </div>
+      {isOpen && (
+        <div className="flex items-center gap-1 pl-2 pr-3">
+          <span className="text-[15px] whitespace-nowrap">{label}</span>
+          {badge && (
+            <span className="text-[11px] bg-[#3a3a3a] text-[#a0a0a0] px-2 py-0.5 rounded-full font-medium uppercase">
+              {badge}
+            </span>
+          )}
+        </div>
       )}
     </Link>
   </div>
