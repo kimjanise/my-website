@@ -75,7 +75,7 @@ export function EatsClient({ places }: EatsClientProps) {
   };
 
   return (
-    <div className="max-w-3xl ml-auto py-8 px-6 mr-48">
+    <div className="max-w-3xl mx-auto py-8 px-6">
       <h1 className="text-[32px] font-semibold text-[#ececec] mb-2">eats</h1>
       <p className="text-[#9a9a9a] text-[16px] mb-8">
         My favorite food spots and recommendations.
