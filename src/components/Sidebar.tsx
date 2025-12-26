@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { BlogPostSummary } from '@/types/blog';
@@ -97,137 +98,154 @@ export function Sidebar({ posts, isOpen, onToggle }: SidebarProps) {
   const currentSlug = pathname.startsWith('/blog/')
     ? pathname.replace('/blog/', '')
     : null;
+  const [logoHovered, setLogoHovered] = useState(false);
 
-  if (!isOpen) {
-    return (
-      <aside className="w-[52px] h-full bg-[#171717] flex flex-col items-center py-3 flex-shrink-0">
-        <button
-          onClick={onToggle}
-          className="text-white cursor-pointer hover:bg-[#424242] p-2 rounded-lg transition-colors mb-2"
-        >
-          <SidebarToggleIcon />
-        </button>
-
-        <div className="flex flex-col items-center">
-          <Link href="/" className="text-[#ececec] cursor-pointer hover:bg-[#212121] p-1.5 rounded-lg transition-colors">
-            <EditIcon />
-          </Link>
-          <div className="text-[#ececec] cursor-pointer hover:bg-[#212121] p-1.5 rounded-lg transition-colors">
-            <SearchIcon />
-          </div>
-          <div className="text-[#ececec] cursor-pointer hover:bg-[#212121] p-1.5 rounded-lg transition-colors">
-            <SparkleIcon />
-          </div>
-          <div className="text-[#ececec] cursor-pointer hover:bg-[#212121] p-1.5 rounded-lg transition-colors">
-            <ImageIcon />
-          </div>
-          <div className="text-[#ececec] cursor-pointer hover:bg-[#212121] p-1.5 rounded-lg transition-colors">
-            <AppsIcon />
-          </div>
-          <div className="text-[#ececec] cursor-pointer hover:bg-[#212121] p-1.5 rounded-lg transition-colors">
-            <CodexIcon />
-          </div>
-          <div className="text-[#ececec] cursor-pointer hover:bg-[#212121] p-1.5 rounded-lg transition-colors">
-            <GPTsIcon />
-          </div>
-          <div className="text-[#ececec] cursor-pointer hover:bg-[#212121] p-1.5 rounded-lg transition-colors">
-            <ProjectsIcon />
-          </div>
-        </div>
-
-        <div className="mt-auto cursor-pointer">
-          <img
-            src="/profile.png"
-            alt="Profile"
-            className="w-9 h-9 rounded-full object-cover"
-          />
-        </div>
-      </aside>
-    );
-  }
+  const handleSidebarClick = () => {
+    if (!isOpen) {
+      onToggle();
+    }
+  };
 
   return (
-    <aside className="w-[260px] h-full bg-[#171717] flex flex-col flex-shrink-0">
-      <div className="flex items-center justify-between px-2 py-3">
-        <Link href="/" className="text-white cursor-pointer p-2 hover:bg-[#424242] rounded-lg transition-colors">
-          <OpenAILogo />
-        </Link>
-        <button
-          onClick={onToggle}
-          className="text-[#9a9a9a] cursor-pointer hover:text-white hover:bg-[#424242] rounded-lg transition-colors p-2"
-        >
-          <SidebarToggleIcon />
-        </button>
+    <aside
+      onClick={handleSidebarClick}
+      className={`h-full flex flex-col flex-shrink-0 overflow-hidden transition-all duration-300 ease-in-out ${
+        isOpen ? 'w-[260px] bg-[#171717]' : 'w-[52px] bg-transparent border-r border-[#3a3a3a] cursor-pointer'
+      }`}
+    >
+      {/* Header */}
+      <div className={`flex items-center py-3 ${isOpen ? 'justify-between px-2' : 'justify-center'}`}>
+        {isOpen ? (
+          <>
+            <Link href="/" className="text-white cursor-pointer p-2 hover:bg-[#424242] rounded-lg transition-colors">
+              <OpenAILogo />
+            </Link>
+            <button
+              onClick={onToggle}
+              className="cursor-pointer hover:bg-[#424242] p-2 rounded-lg transition-colors text-[#9a9a9a] hover:text-white"
+            >
+              <SidebarToggleIcon />
+            </button>
+          </>
+        ) : (
+          <div
+            className="text-white p-2 rounded-lg transition-colors hover:bg-[#424242]"
+            onMouseEnter={() => setLogoHovered(true)}
+            onMouseLeave={() => setLogoHovered(false)}
+          >
+            {logoHovered ? <SidebarToggleIcon /> : <OpenAILogo />}
+          </div>
+        )}
       </div>
 
-      <nav className="flex flex-col px-2 mt-3">
-        <Link href="/" className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
-          <EditIcon />
-          <span className="text-[15px]">new chat</span>
-        </Link>
-        <div className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
+      {/* Navigation */}
+      <nav className={`flex flex-col mt-3 ${isOpen ? 'px-2' : 'items-center'}`}>
+        {isOpen ? (
+          <Link
+            href="/"
+            className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <EditIcon />
+            <span className="text-[15px] whitespace-nowrap">new chat</span>
+          </Link>
+        ) : (
+          <div className="flex items-center p-1.5 justify-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
+            <EditIcon />
+          </div>
+        )}
+        <div className={`flex items-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors ${
+          isOpen ? 'gap-3 px-3 py-1.5' : 'p-1.5 justify-center'
+        }`}>
           <SearchIcon />
-          <span className="text-[15px]">about me</span>
+          {isOpen && <span className="text-[15px] whitespace-nowrap">about me</span>}
         </div>
-        <div className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
+        <div className={`flex items-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors ${
+          isOpen ? 'gap-3 px-3 py-1.5' : 'p-1.5 justify-center'
+        }`}>
           <SparkleIcon />
-          <span className="text-[15px]">projects</span>
+          {isOpen && <span className="text-[15px] whitespace-nowrap">projects</span>}
         </div>
-        <div className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
+        <div className={`flex items-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors ${
+          isOpen ? 'gap-3 px-3 py-1.5' : 'p-1.5 justify-center'
+        }`}>
           <ImageIcon />
-          <span className="text-[15px]">tech inspo</span>
-          <span className="text-[11px] bg-[#3a3a3a] text-[#a0a0a0] px-2 py-0.5 rounded-full font-medium uppercase ml-1">NEW</span>
+          {isOpen && (
+            <>
+              <span className="text-[15px] whitespace-nowrap">tech inspo</span>
+              <span className="text-[11px] bg-[#3a3a3a] text-[#a0a0a0] px-2 py-0.5 rounded-full font-medium uppercase ml-1">NEW</span>
+            </>
+          )}
         </div>
-        <div className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
+        <div className={`flex items-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors ${
+          isOpen ? 'gap-3 px-3 py-1.5' : 'p-1.5 justify-center'
+        }`}>
           <AppsIcon />
-          <span className="text-[15px]">people</span>
+          {isOpen && <span className="text-[15px] whitespace-nowrap">people</span>}
         </div>
-        <div className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
+        <div className={`flex items-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors ${
+          isOpen ? 'gap-3 px-3 py-1.5' : 'p-1.5 justify-center'
+        }`}>
           <CodexIcon />
-          <span className="text-[15px]">eats</span>
+          {isOpen && <span className="text-[15px] whitespace-nowrap">eats</span>}
         </div>
-        <div className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
+        <div className={`flex items-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors ${
+          isOpen ? 'gap-3 px-3 py-1.5' : 'p-1.5 justify-center'
+        }`}>
           <GPTsIcon />
-          <span className="text-[15px]">music</span>
+          {isOpen && <span className="text-[15px] whitespace-nowrap">music</span>}
         </div>
-        <div className="flex items-center gap-3 px-3 py-1.5 text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
+        <div className={`flex items-center text-[#ececec] hover:bg-[#212121] rounded-lg cursor-pointer transition-colors ${
+          isOpen ? 'gap-3 px-3 py-1.5' : 'p-1.5 justify-center'
+        }`}>
           <ProjectsIcon />
-          <span className="text-[15px]">museums</span>
+          {isOpen && <span className="text-[15px] whitespace-nowrap">museums</span>}
         </div>
       </nav>
 
-      <div className="mt-3 flex-1 flex flex-col overflow-hidden">
-        <div className="px-5 py-1.5">
-          <span className="text-[14px] text-[#9a9a9a]">recent thoughts</span>
+      {/* Recent thoughts - only visible when open */}
+      {isOpen && (
+        <div className="mt-3 flex-1 flex flex-col overflow-hidden">
+          <div className="px-5 py-1.5">
+            <span className="text-[14px] text-[#9a9a9a]">recent thoughts</span>
+          </div>
+          <div className="flex-1 overflow-y-auto px-2">
+            {posts.map((post) => (
+              <Link
+                key={post.id}
+                href={`/blog/${post.slug}`}
+                className={`block px-3 py-1.5 rounded-lg cursor-pointer transition-colors ${
+                  currentSlug === post.slug
+                    ? 'bg-[#2f2f2f] text-[#ececec]'
+                    : 'text-[#ececec] hover:bg-[#212121]'
+                }`}
+              >
+                <span className="text-[15px]">{post.title}</span>
+              </Link>
+            ))}
+          </div>
         </div>
-        <div className="flex-1 overflow-y-auto px-2">
-          {posts.map((post) => (
-            <Link
-              key={post.id}
-              href={`/blog/${post.slug}`}
-              className={`block px-3 py-1.5 rounded-lg cursor-pointer transition-colors ${
-                currentSlug === post.slug
-                  ? 'bg-[#2f2f2f] text-[#ececec]'
-                  : 'text-[#ececec] hover:bg-[#212121]'
-              }`}
-            >
-              <span className="text-[15px]">{post.title}</span>
-            </Link>
-          ))}
-        </div>
-      </div>
+      )}
 
-      <div className="p-3 mt-auto">
-        <div className="flex items-center gap-3 px-2 py-2 hover:bg-[#212121] rounded-lg cursor-pointer transition-colors">
+      {/* Spacer when closed */}
+      {!isOpen && <div className="flex-1" />}
+
+      {/* Profile */}
+      <div className={`mt-auto ${isOpen ? 'p-3' : 'py-3 flex justify-center'}`}>
+        <div className={`flex items-center hover:bg-[#212121] rounded-lg cursor-pointer transition-colors ${
+          isOpen ? 'gap-3 px-2 py-2' : 'p-0'
+        }`}>
           <img
             src="/profile.png"
             alt="Profile"
             className="w-9 h-9 rounded-full object-cover"
           />
-          <div className="flex flex-col">
-            <span className="text-[14px] text-[#ececec]">janise kim</span>
-            <span className="text-[12px] text-[#9a9a9a]">Plus</span>
-          </div>
+          {isOpen && (
+            <div className="flex flex-col">
+              <span className="text-[14px] text-[#ececec]">janise kim</span>
+              <span className="text-[12px] text-[#9a9a9a]">Plus</span>
+            </div>
+          )}
         </div>
       </div>
     </aside>
