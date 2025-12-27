@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import type { Place, LocationTag } from '@/types/eats';
+import { useTheme } from '@/context/ThemeContext';
 
 const categories = ['all', 'restaurants', 'bakeries', 'coffee + tea', 'bars'] as const;
 
@@ -23,6 +24,8 @@ interface EatsClientProps {
 export function EatsClient({ places }: EatsClientProps) {
   const [activeCategory, setActiveCategory] = useState<CategoryTab>('all');
   const [activeLocations, setActiveLocations] = useState<LocationTag[]>([]);
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
 
   const toggleLocation = (location: LocationTag) => {
     setActiveLocations((prev) =>
@@ -38,8 +41,8 @@ export function EatsClient({ places }: EatsClientProps) {
 
   return (
     <div className="min-w-[768px] max-w-3xl py-8 px-6 ml-60">
-      <h1 className="text-[32px] font-semibold text-[#ececec] mb-2">eats</h1>
-      <p className="text-[#9a9a9a] text-[16px] mb-8">
+      <h1 className={`text-[32px] font-semibold mb-2 ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>eats</h1>
+      <p className={`text-[16px] mb-8 ${isDark ? 'text-[#9a9a9a]' : 'text-[#6b6b6b]'}`}>
         where i would take friends + family if they were visiting (see beli!)
       </p>
 
@@ -50,13 +53,13 @@ export function EatsClient({ places }: EatsClientProps) {
             onClick={() => setActiveCategory(category)}
             className={`relative px-4 py-2 text-[15px] whitespace-nowrap transition-colors ${
               activeCategory === category
-                ? 'text-[#ececec]'
-                : 'text-[#9a9a9a] hover:text-[#ececec]'
+                ? isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'
+                : isDark ? 'text-[#9a9a9a] hover:text-[#ececec]' : 'text-[#6b6b6b] hover:text-[#0d0d0d]'
             }`}
           >
             {category}
             {activeCategory === category && (
-              <span className="absolute bottom-0 left-2 right-2 h-[2px] bg-[#ececec]" />
+              <span className={`absolute bottom-0 left-2 right-2 h-[2px] ${isDark ? 'bg-[#ececec]' : 'bg-[#0d0d0d]'}`} />
             )}
           </button>
         ))}
@@ -70,7 +73,7 @@ export function EatsClient({ places }: EatsClientProps) {
             className={`text-[12px] px-3 py-1 rounded-full transition-colors ${
               activeLocations.includes(location)
                 ? tagColors[location]
-                : 'bg-[#2f2f2f] text-[#9a9a9a] hover:text-[#ececec]'
+                : isDark ? 'bg-[#2f2f2f] text-[#9a9a9a] hover:text-[#ececec]' : 'bg-[#e5e5e5] text-[#6b6b6b] hover:text-[#0d0d0d]'
             }`}
           >
             {location}
@@ -86,18 +89,18 @@ export function EatsClient({ places }: EatsClientProps) {
                 href={place.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[15px] text-[#ececec] hover:underline"
+                className={`text-[15px] hover:underline ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}
               >
                 {place.name}
               </a>
             ) : (
-              <span className="text-[15px] text-[#ececec]">{place.name}</span>
+              <span className={`text-[15px] ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>{place.name}</span>
             )}
             <span className={`text-[12px] px-2 py-0.5 rounded-full ${tagColors[place.location]}`}>
               {place.location}
             </span>
-            <span className="text-[20px] text-[#9a9a9a] leading-none">•</span>
-            <span className="text-[14px] text-[#9a9a9a]">{place.favorites}</span>
+            <span className={`text-[20px] leading-none ${isDark ? 'text-[#9a9a9a]' : 'text-[#6b6b6b]'}`}>•</span>
+            <span className={`text-[14px] ${isDark ? 'text-[#9a9a9a]' : 'text-[#6b6b6b]'}`}>{place.favorites}</span>
           </div>
         ))}
       </div>

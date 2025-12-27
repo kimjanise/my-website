@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { BlogPostSummary } from '@/types/blog';
 import { useSidebar } from '@/context/SidebarContext';
+import { useTheme } from '@/context/ThemeContext';
 import { LuStar, LuCode, LuMonitor, LuUsers, LuUtensils, LuMusic, LuLandmark } from 'react-icons/lu';
 import { HiOutlinePencilAlt } from 'react-icons/hi';
 
@@ -33,10 +34,11 @@ interface NavItemProps {
   label: string;
   badge?: string;
   isOpen: boolean;
+  isDark: boolean;
   onClick?: (e: React.MouseEvent) => void;
 }
 
-const NavItem = ({ href, icon, label, badge, isOpen, onClick }: NavItemProps) => (
+const NavItem = ({ href, icon, label, badge, isOpen, isDark, onClick }: NavItemProps) => (
   <div className="flex items-center h-[32px] px-[10px]">
     <Link
       href={href}
@@ -44,8 +46,12 @@ const NavItem = ({ href, icon, label, badge, isOpen, onClick }: NavItemProps) =>
         e.stopPropagation();
         onClick?.(e);
       }}
-      className={`flex items-center text-[#ececec] rounded-lg cursor-pointer transition-colors relative z-10 h-[32px] ${isOpen ? 'hover:bg-[#212121] flex-1' : 'hover:bg-[#2f2f2f] w-[32px] justify-center'
-        }`}
+      className={`flex items-center rounded-lg cursor-pointer transition-colors relative z-10 h-[32px] ${
+        isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'
+      } ${isOpen
+        ? `flex-1 ${isDark ? 'hover:bg-[#212121]' : 'hover:bg-[#ececec]'}`
+        : `w-[32px] justify-center ${isDark ? 'hover:bg-[#2f2f2f]' : 'hover:bg-[#e5e5e5]'}`
+      }`}
     >
       <div className={`flex items-center justify-center flex-shrink-0 ${isOpen ? 'w-[32px]' : ''}`}>
         {icon}
@@ -54,7 +60,7 @@ const NavItem = ({ href, icon, label, badge, isOpen, onClick }: NavItemProps) =>
         <div className="flex items-center gap-2 pl-2 pr-3">
           <span className="text-[15px] whitespace-nowrap">{label}</span>
           {badge && (
-            <span className="text-[11px] bg-[#3a3a3a] text-[#a0a0a0] px-2 py-0.5 rounded-full font-medium uppercase">
+            <span className={`text-[11px] px-2 py-0.5 rounded-full font-medium uppercase ${isDark ? 'bg-[#3a3a3a] text-[#a0a0a0]' : 'bg-[#e5e5e5] text-[#6b6b6b]'}`}>
               {badge}
             </span>
           )}
@@ -66,6 +72,8 @@ const NavItem = ({ href, icon, label, badge, isOpen, onClick }: NavItemProps) =>
 
 export function Sidebar({ posts }: SidebarProps) {
   const { isOpen, toggle } = useSidebar();
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
   const pathname = usePathname();
   const currentSlug = pathname.startsWith('/blog/')
     ? pathname.replace('/blog/', '')
@@ -83,8 +91,11 @@ export function Sidebar({ posts }: SidebarProps) {
   return (
     <aside
       onClick={handleSidebarClick}
-      className={`h-full flex flex-col flex-shrink-0 overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'w-[260px] bg-[#171717]' : 'w-[52px] bg-transparent border-r border-[#3a3a3a] cursor-pointer'
-        }`}
+      className={`h-full flex flex-col flex-shrink-0 overflow-hidden transition-all duration-300 ease-in-out ${
+        isOpen
+          ? `w-[260px] ${isDark ? 'bg-[#171717]' : 'bg-[#f9f9f9]'}`
+          : `w-[52px] bg-transparent border-r cursor-pointer ${isDark ? 'border-[#3a3a3a]' : 'border-[#e5e5e5]'}`
+      }`}
     >
       {/* Header */}
       <div className="flex items-center h-[52px]">
@@ -97,14 +108,14 @@ export function Sidebar({ posts }: SidebarProps) {
             <Link
               href="/"
               onClick={stopPropagation}
-              className="text-white cursor-pointer p-2 rounded-lg transition-colors hover:bg-[#424242]"
+              className={`cursor-pointer p-2 rounded-lg transition-colors ${isDark ? 'text-white hover:bg-[#424242]' : 'text-[#0d0d0d] hover:bg-[#e5e5e5]'}`}
             >
               <OpenAILogo />
             </Link>
           ) : logoHovered ? (
             <button
               onClick={(e) => { e.stopPropagation(); toggle(); }}
-              className="text-white cursor-pointer p-2 rounded-lg transition-colors hover:bg-[#2f2f2f]"
+              className={`cursor-pointer p-2 rounded-lg transition-colors ${isDark ? 'text-white hover:bg-[#2f2f2f]' : 'text-[#0d0d0d] hover:bg-[#e5e5e5]'}`}
             >
               <SidebarToggleIcon />
             </button>
@@ -112,7 +123,7 @@ export function Sidebar({ posts }: SidebarProps) {
             <Link
               href="/"
               onClick={stopPropagation}
-              className="text-white cursor-pointer p-2 rounded-lg transition-colors hover:bg-[#2f2f2f]"
+              className={`cursor-pointer p-2 rounded-lg transition-colors ${isDark ? 'text-white hover:bg-[#2f2f2f]' : 'text-[#0d0d0d] hover:bg-[#e5e5e5]'}`}
             >
               <OpenAILogo />
             </Link>
@@ -122,7 +133,7 @@ export function Sidebar({ posts }: SidebarProps) {
           <div className="flex-1 flex justify-end pr-2">
             <button
               onClick={(e) => { e.stopPropagation(); toggle(); }}
-              className="cursor-pointer hover:bg-[#424242] p-2 rounded-lg transition-colors text-[#9a9a9a] hover:text-white"
+              className={`cursor-pointer p-2 rounded-lg transition-colors ${isDark ? 'text-[#9a9a9a] hover:bg-[#424242] hover:text-white' : 'text-[#6b6b6b] hover:bg-[#e5e5e5] hover:text-[#0d0d0d]'}`}
             >
               <SidebarToggleIcon />
             </button>
@@ -132,21 +143,21 @@ export function Sidebar({ posts }: SidebarProps) {
 
       {/* Navigation */}
       <nav className="flex flex-col mt-3">
-        <NavItem href="/" icon={<HiOutlinePencilAlt size={20} />} label="new chat" isOpen={isOpen} onClick={stopPropagation} />
-        <NavItem href="/about-me" icon={<LuStar size={20} />} label="about me" isOpen={isOpen} onClick={stopPropagation} />
-        <NavItem href="/projects" icon={<LuCode size={20} />} label="projects" isOpen={isOpen} onClick={stopPropagation} />
-        <NavItem href="/tech" icon={<LuMonitor size={20} />} label="tech" badge="NEW" isOpen={isOpen} onClick={stopPropagation} />
-        <NavItem href="/people" icon={<LuUsers size={20} />} label="people" isOpen={isOpen} onClick={stopPropagation} />
-        <NavItem href="/eats" icon={<LuUtensils size={20} />} label="eats" isOpen={isOpen} onClick={stopPropagation} />
-        <NavItem href="/music" icon={<LuMusic size={20} />} label="music" isOpen={isOpen} onClick={stopPropagation} />
-        <NavItem href="/museums" icon={<LuLandmark size={20} />} label="museums" isOpen={isOpen} onClick={stopPropagation} />
+        <NavItem href="/" icon={<HiOutlinePencilAlt size={20} />} label="new chat" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
+        <NavItem href="/about-me" icon={<LuStar size={20} />} label="about me" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
+        <NavItem href="/projects" icon={<LuCode size={20} />} label="projects" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
+        <NavItem href="/tech" icon={<LuMonitor size={20} />} label="tech" badge="NEW" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
+        <NavItem href="/people" icon={<LuUsers size={20} />} label="people" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
+        <NavItem href="/eats" icon={<LuUtensils size={20} />} label="eats" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
+        <NavItem href="/music" icon={<LuMusic size={20} />} label="music" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
+        <NavItem href="/museums" icon={<LuLandmark size={20} />} label="museums" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
       </nav>
 
       {/* Recent thoughts - only visible when open */}
       {isOpen && (
         <div className="mt-3 flex-1 flex flex-col overflow-hidden">
           <div className="px-5 py-1.5">
-            <span className="text-[14px] text-[#9a9a9a]">recent thoughts</span>
+            <span className={`text-[14px] ${isDark ? 'text-[#9a9a9a]' : 'text-[#6b6b6b]'}`}>recent thoughts</span>
           </div>
           <div className="flex-1 overflow-y-auto px-2">
             {posts.map((post) => (
@@ -154,10 +165,11 @@ export function Sidebar({ posts }: SidebarProps) {
                 key={post.id}
                 href={`/blog/${post.slug}`}
                 onClick={stopPropagation}
-                className={`block px-3 py-1.5 rounded-lg cursor-pointer transition-colors ${currentSlug === post.slug
-                  ? 'bg-[#2f2f2f] text-[#ececec]'
-                  : 'text-[#ececec] hover:bg-[#212121]'
-                  }`}
+                className={`block px-3 py-1.5 rounded-lg cursor-pointer transition-colors ${
+                  currentSlug === post.slug
+                    ? isDark ? 'bg-[#2f2f2f] text-[#ececec]' : 'bg-[#e5e5e5] text-[#0d0d0d]'
+                    : isDark ? 'text-[#ececec] hover:bg-[#212121]' : 'text-[#0d0d0d] hover:bg-[#ececec]'
+                }`}
               >
                 <span className="text-[15px]">{post.title}</span>
               </Link>
@@ -174,7 +186,11 @@ export function Sidebar({ posts }: SidebarProps) {
         <a
           href="mailto:janiseskim@gmail.com"
           onClick={stopPropagation}
-          className={`flex items-center rounded-lg cursor-pointer transition-colors relative z-10 ${isOpen ? 'mx-2 mb-3 py-2 hover:bg-[#212121]' : 'justify-center py-3 hover:bg-[#2f2f2f]'}`}
+          className={`flex items-center rounded-lg cursor-pointer transition-colors relative z-10 ${
+            isOpen
+              ? `mx-2 mb-3 py-2 ${isDark ? 'hover:bg-[#212121]' : 'hover:bg-[#ececec]'}`
+              : `justify-center py-3 ${isDark ? 'hover:bg-[#2f2f2f]' : 'hover:bg-[#e5e5e5]'}`
+          }`}
         >
           <div className="w-[52px] flex items-center justify-center flex-shrink-0">
             <img
@@ -185,8 +201,8 @@ export function Sidebar({ posts }: SidebarProps) {
           </div>
           {isOpen && (
             <div className="flex flex-col">
-              <span className="text-[14px] text-[#ececec]">janise kim</span>
-              <span className="text-[12px] text-[#9a9a9a]">click to reach out!</span>
+              <span className={`text-[14px] ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>janise kim</span>
+              <span className={`text-[12px] ${isDark ? 'text-[#9a9a9a]' : 'text-[#6b6b6b]'}`}>click to reach out!</span>
             </div>
           )}
         </a>

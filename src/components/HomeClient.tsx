@@ -2,7 +2,9 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Sidebar } from './Sidebar';
+import { ThemeToggle } from './ThemeToggle';
 import type { BlogPostSummary } from '@/types/blog';
+import { useTheme } from '@/context/ThemeContext';
 
 // Icons
 const PlusIcon = () => (
@@ -37,11 +39,6 @@ const ChevronDownIcon = () => (
   </svg>
 );
 
-const FullScreenIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
 interface HomeClientProps {
   posts: BlogPostSummary[];
@@ -50,42 +47,43 @@ interface HomeClientProps {
 export function HomeClient({ posts }: HomeClientProps) {
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
 
+  const isDark = theme === 'dark';
+
   return (
-    <div className="flex h-screen w-full bg-[#212121]">
+    <div className={`flex h-screen w-full ${isDark ? 'bg-[#212121]' : 'bg-white'}`}>
       <Sidebar posts={posts} />
 
-      <main className="flex-1 flex flex-col bg-[#212121]">
+      <main className={`flex-1 flex flex-col ${isDark ? 'bg-[#212121]' : 'bg-white'}`}>
         <header className="flex items-center justify-between px-3 py-1.5">
           <div className="flex items-center">
-            <div className="flex items-center gap-1 cursor-pointer hover:bg-[#2f2f2f] px-3 py-2 rounded-lg transition-colors">
-              <span className="text-[#ececec] font-normal text-[18px]">janiseGPT 5.2</span>
+            <div className={`flex items-center gap-1 cursor-pointer px-3 py-2 rounded-lg transition-colors ${isDark ? 'hover:bg-[#2f2f2f]' : 'hover:bg-[#f0f0f0]'}`}>
+              <span className={`font-normal text-[18px] ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>janiseGPT 5.2</span>
               <ChevronDownIcon />
             </div>
           </div>
 
           <div className="flex items-center gap-1">
-            <div className="text-[#9a9a9a] cursor-pointer hover:bg-[#2f2f2f] p-2 rounded-lg transition-colors">
+            <div className={`cursor-pointer p-2 rounded-lg transition-colors ${isDark ? 'text-[#9a9a9a] hover:bg-[#2f2f2f]' : 'text-[#6b6b6b] hover:bg-[#f0f0f0]'}`}>
               <UserIcon />
             </div>
-            <div className="text-[#9a9a9a] cursor-pointer hover:bg-[#2f2f2f] p-2 rounded-lg transition-colors">
-              <FullScreenIcon />
-            </div>
+            <ThemeToggle />
           </div>
         </header>
 
         <div className="flex-1 flex flex-col items-center justify-center px-4 -mt-32">
-          <h1 className="text-[32px] font-normal text-[#ececec] mb-8 tracking-tight">
+          <h1 className={`text-[32px] font-normal mb-8 tracking-tight ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>
             hi! i&apos;m janise :)
           </h1>
 
           <div className="w-full max-w-[760px]">
-            <div className="flex items-center bg-[#2f2f2f] rounded-[26px] px-4 py-3 gap-2">
-              <button className="text-[#9a9a9a] hover:text-[#ececec] transition-colors p-1.5 hover:bg-[#424242] rounded-full">
+            <div className={`flex items-center rounded-[26px] px-4 py-3 gap-2 ${isDark ? 'bg-[#2f2f2f]' : 'bg-[#f4f4f4] border border-[#e5e5e5]'}`}>
+              <button className={`transition-colors p-1.5 rounded-full ${isDark ? 'text-[#9a9a9a] hover:text-[#ececec] hover:bg-[#424242]' : 'text-[#6b6b6b] hover:text-[#0d0d0d] hover:bg-[#e5e5e5]'}`}>
                 <PlusIcon />
               </button>
 
@@ -95,14 +93,14 @@ export function HomeClient({ posts }: HomeClientProps) {
                 placeholder="ask about what i'm up to"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                className="flex-1 bg-transparent border-none outline-none text-[#ececec] text-[15px] placeholder:text-[#8e8e8e]"
+                className={`flex-1 bg-transparent border-none outline-none text-[15px] ${isDark ? 'text-[#ececec] placeholder:text-[#8e8e8e]' : 'text-[#0d0d0d] placeholder:text-[#9a9a9a]'}`}
               />
 
-              <button className="text-[#9a9a9a] hover:text-[#ececec] transition-colors p-1.5 hover:bg-[#424242] rounded-full">
+              <button className={`transition-colors p-1.5 rounded-full ${isDark ? 'text-[#9a9a9a] hover:text-[#ececec] hover:bg-[#424242]' : 'text-[#6b6b6b] hover:text-[#0d0d0d] hover:bg-[#e5e5e5]'}`}>
                 <MicrophoneIcon />
               </button>
 
-              <button className="bg-white text-black p-2.5 rounded-full hover:bg-gray-100 transition-colors ml-1">
+              <button className={`p-2.5 rounded-full transition-colors ml-1 ${isDark ? 'bg-white text-black hover:bg-gray-100' : 'bg-[#0d0d0d] text-white hover:bg-[#2f2f2f]'}`}>
                 <VoiceIcon />
               </button>
             </div>
