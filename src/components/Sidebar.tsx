@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import type { BlogPostSummary } from '@/types/blog';
 import { useSidebar } from '@/context/SidebarContext';
 import { useTheme } from '@/context/ThemeContext';
+import { useChat } from '@/context/ChatContext';
 import { ProfileMenu } from './ProfileMenu';
 import { LuStar, LuCode, LuMonitor, LuUsers, LuUtensils, LuMusic, LuLandmark } from 'react-icons/lu';
 import { HiOutlinePencilAlt } from 'react-icons/hi';
@@ -40,17 +41,17 @@ interface NavItemProps {
 }
 
 const NavItem = ({ href, icon, label, badge, isOpen, isDark, onClick }: NavItemProps) => (
-  <div className="flex items-center h-[32px] px-[10px]">
+  <div className={`flex items-center h-[36px] ${isOpen ? 'px-[10px]' : 'px-[8px]'}`}>
     <Link
       href={href}
       onClick={(e) => {
         e.stopPropagation();
         onClick?.(e);
       }}
-      className={`flex items-center rounded-lg cursor-pointer transition-colors relative z-10 h-[32px] ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'
+      className={`flex items-center rounded-lg cursor-pointer transition-colors relative z-10 h-[36px] ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'
         } ${isOpen
           ? `flex-1 ${isDark ? 'hover:bg-[#212121]' : 'hover:bg-[#ececec]'}`
-          : `w-[32px] justify-center ${isDark ? 'hover:bg-[#2f2f2f]' : 'hover:bg-[#e5e5e5]'}`
+          : `w-[36px] justify-center ${isDark ? 'hover:bg-[#2f2f2f]' : 'hover:bg-[#e5e5e5]'}`
         }`}
     >
       <div className={`flex items-center justify-center flex-shrink-0 ${isOpen ? 'w-[32px]' : ''}`}>
@@ -73,12 +74,14 @@ const NavItem = ({ href, icon, label, badge, isOpen, isDark, onClick }: NavItemP
 export function Sidebar({ posts }: SidebarProps) {
   const { isOpen, toggle } = useSidebar();
   const { theme } = useTheme();
+  const { resetChat } = useChat();
   const isDark = theme === 'dark';
   const pathname = usePathname();
   const currentSlug = pathname.startsWith('/blog/')
     ? pathname.replace('/blog/', '')
     : null;
   const [logoHovered, setLogoHovered] = useState(false);
+  const isHomePage = pathname === '/';
 
   const handleSidebarClick = () => {
     if (!isOpen) {
@@ -88,12 +91,20 @@ export function Sidebar({ posts }: SidebarProps) {
 
   const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();
 
+  const handleNewChatClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isHomePage) {
+      e.preventDefault();
+      resetChat();
+    }
+  };
+
   return (
     <aside
       onClick={handleSidebarClick}
       className={`h-full flex flex-col flex-shrink-0 overflow-hidden transition-all duration-300 ease-in-out ${isOpen
-          ? `w-[260px] ${isDark ? 'bg-[#171717]' : 'bg-[#f9f9f9]'}`
-          : `w-[52px] bg-transparent border-r cursor-pointer ${isDark ? 'border-[#3a3a3a]' : 'border-[#e5e5e5]'}`
+        ? `w-[260px] ${isDark ? 'bg-[#171717]' : 'bg-[#f9f9f9]'}`
+        : `w-[52px] bg-transparent border-r cursor-pointer ${isDark ? 'border-[#3a3a3a]' : 'border-[#e5e5e5]'}`
         }`}
     >
       {/* Header */}
@@ -106,7 +117,7 @@ export function Sidebar({ posts }: SidebarProps) {
           {isOpen ? (
             <Link
               href="/"
-              onClick={stopPropagation}
+              onClick={handleNewChatClick}
               className={`cursor-pointer p-2 rounded-lg transition-colors ${isDark ? 'text-white hover:bg-[#424242]' : 'text-[#0d0d0d] hover:bg-[#e5e5e5]'}`}
             >
               <OpenAILogo />
@@ -121,7 +132,7 @@ export function Sidebar({ posts }: SidebarProps) {
           ) : (
             <Link
               href="/"
-              onClick={stopPropagation}
+              onClick={handleNewChatClick}
               className={`cursor-pointer p-2 rounded-lg transition-colors ${isDark ? 'text-white hover:bg-[#2f2f2f]' : 'text-[#0d0d0d] hover:bg-[#e5e5e5]'}`}
             >
               <OpenAILogo />
@@ -142,7 +153,7 @@ export function Sidebar({ posts }: SidebarProps) {
 
       {/* Navigation */}
       <nav className="flex flex-col mt-3">
-        <NavItem href="/" icon={<HiOutlinePencilAlt size={20} />} label="new chat" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
+        <NavItem href="/" icon={<HiOutlinePencilAlt size={20} />} label="new chat" isOpen={isOpen} isDark={isDark} onClick={handleNewChatClick} />
         <NavItem href="/about-me" icon={<LuStar size={20} />} label="about me" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
         <NavItem href="/projects" icon={<LuCode size={20} />} label="projects" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
         <NavItem href="/tech" icon={<LuMonitor size={20} />} label="tech" badge="NEW" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
@@ -165,8 +176,8 @@ export function Sidebar({ posts }: SidebarProps) {
                 href={`/blog/${post.slug}`}
                 onClick={stopPropagation}
                 className={`block px-3 py-1.5 rounded-lg cursor-pointer transition-colors ${currentSlug === post.slug
-                    ? isDark ? 'bg-[#2f2f2f] text-[#ececec]' : 'bg-[#e5e5e5] text-[#0d0d0d]'
-                    : isDark ? 'text-[#ececec] hover:bg-[#212121]' : 'text-[#0d0d0d] hover:bg-[#ececec]'
+                  ? isDark ? 'bg-[#2f2f2f] text-[#ececec]' : 'bg-[#e5e5e5] text-[#0d0d0d]'
+                  : isDark ? 'text-[#ececec] hover:bg-[#212121]' : 'text-[#0d0d0d] hover:bg-[#ececec]'
                   }`}
               >
                 <span className="text-[15px]">{post.title}</span>

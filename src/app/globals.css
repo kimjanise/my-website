@@ -66,3 +66,16 @@ body {
 input::placeholder {
   color: var(--text-muted);
 }
+
+/* Pulsing dot animation for loading state */
+@keyframes pulse-dot {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.4);
+  }
+}

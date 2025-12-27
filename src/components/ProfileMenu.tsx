@@ -41,7 +41,7 @@ export function ProfileMenu({ isOpen: isSidebarExpanded }: ProfileMenuProps) {
   ];
 
   return (
-    <div className="relative px-[10px] mb-3" ref={menuRef}>
+    <div className={`relative mb-3 ${isSidebarExpanded ? 'px-[10px]' : 'px-[8px]'}`} ref={menuRef}>
       <button
         type="button"
         onClick={(e) => {
@@ -50,14 +50,14 @@ export function ProfileMenu({ isOpen: isSidebarExpanded }: ProfileMenuProps) {
         }}
         className={`flex items-center rounded-lg cursor-pointer transition-colors ${isSidebarExpanded
           ? `flex-1 w-full py-1.5 ${isDark ? 'hover:bg-[#212121]' : 'hover:bg-[#ececec]'}`
-          : `w-[32px] justify-center py-1.5 ${isDark ? 'hover:bg-[#2f2f2f]' : 'hover:bg-[#e5e5e5]'}`
+          : `w-[36px] h-[36px] justify-center ${isDark ? 'hover:bg-[#2f2f2f]' : 'hover:bg-[#e5e5e5]'}`
           }`}
       >
         <div className={`flex items-center justify-center flex-shrink-0 ${isSidebarExpanded ? 'w-[32px]' : ''}`}>
           <img
             src="/profile.png"
             alt="Profile"
-            className="w-7 h-7 rounded-full object-cover"
+            className="w-6 h-6 rounded-full object-cover"
           />
         </div>
         {isSidebarExpanded && (
@@ -86,7 +86,7 @@ export function ProfileMenu({ isOpen: isSidebarExpanded }: ProfileMenuProps) {
               <img
                 src="/profile.png"
                 alt="Profile"
-                className="w-8 h-8 rounded-full object-cover"
+                className="w-7 h-7 rounded-full object-cover"
               />
               <div className="flex flex-col">
                 <span className={`text-[14px] font-medium ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>janise kim</span>
