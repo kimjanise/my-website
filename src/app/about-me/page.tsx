@@ -7,7 +7,7 @@ export default async function AboutMePage() {
 
   return (
     <PageLayoutClient posts={posts}>
-      <SubpageContent title="about me" description="Welcome to my about page!" />
+      <SubpageContent title="about me" description="..." />
     </PageLayoutClient>
   );
 }

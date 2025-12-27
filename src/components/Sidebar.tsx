@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import type { BlogPostSummary } from '@/types/blog';
 import { useSidebar } from '@/context/SidebarContext';
 import { useTheme } from '@/context/ThemeContext';
+import { ProfileMenu } from './ProfileMenu';
 import { LuStar, LuCode, LuMonitor, LuUsers, LuUtensils, LuMusic, LuLandmark } from 'react-icons/lu';
 import { HiOutlinePencilAlt } from 'react-icons/hi';
 
@@ -46,12 +47,11 @@ const NavItem = ({ href, icon, label, badge, isOpen, isDark, onClick }: NavItemP
         e.stopPropagation();
         onClick?.(e);
       }}
-      className={`flex items-center rounded-lg cursor-pointer transition-colors relative z-10 h-[32px] ${
-        isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'
-      } ${isOpen
-        ? `flex-1 ${isDark ? 'hover:bg-[#212121]' : 'hover:bg-[#ececec]'}`
-        : `w-[32px] justify-center ${isDark ? 'hover:bg-[#2f2f2f]' : 'hover:bg-[#e5e5e5]'}`
-      }`}
+      className={`flex items-center rounded-lg cursor-pointer transition-colors relative z-10 h-[32px] ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'
+        } ${isOpen
+          ? `flex-1 ${isDark ? 'hover:bg-[#212121]' : 'hover:bg-[#ececec]'}`
+          : `w-[32px] justify-center ${isDark ? 'hover:bg-[#2f2f2f]' : 'hover:bg-[#e5e5e5]'}`
+        }`}
     >
       <div className={`flex items-center justify-center flex-shrink-0 ${isOpen ? 'w-[32px]' : ''}`}>
         {icon}
@@ -91,11 +91,10 @@ export function Sidebar({ posts }: SidebarProps) {
   return (
     <aside
       onClick={handleSidebarClick}
-      className={`h-full flex flex-col flex-shrink-0 overflow-hidden transition-all duration-300 ease-in-out ${
-        isOpen
+      className={`h-full flex flex-col flex-shrink-0 overflow-hidden transition-all duration-300 ease-in-out ${isOpen
           ? `w-[260px] ${isDark ? 'bg-[#171717]' : 'bg-[#f9f9f9]'}`
           : `w-[52px] bg-transparent border-r cursor-pointer ${isDark ? 'border-[#3a3a3a]' : 'border-[#e5e5e5]'}`
-      }`}
+        }`}
     >
       {/* Header */}
       <div className="flex items-center h-[52px]">
@@ -165,11 +164,10 @@ export function Sidebar({ posts }: SidebarProps) {
                 key={post.id}
                 href={`/blog/${post.slug}`}
                 onClick={stopPropagation}
-                className={`block px-3 py-1.5 rounded-lg cursor-pointer transition-colors ${
-                  currentSlug === post.slug
+                className={`block px-3 py-1.5 rounded-lg cursor-pointer transition-colors ${currentSlug === post.slug
                     ? isDark ? 'bg-[#2f2f2f] text-[#ececec]' : 'bg-[#e5e5e5] text-[#0d0d0d]'
                     : isDark ? 'text-[#ececec] hover:bg-[#212121]' : 'text-[#0d0d0d] hover:bg-[#ececec]'
-                }`}
+                  }`}
               >
                 <span className="text-[15px]">{post.title}</span>
               </Link>
@@ -182,30 +180,8 @@ export function Sidebar({ posts }: SidebarProps) {
       {!isOpen && <div className="flex-1" />}
 
       {/* Profile */}
-      <div className="mt-auto">
-        <a
-          href="mailto:janiseskim@gmail.com"
-          onClick={stopPropagation}
-          className={`flex items-center rounded-lg cursor-pointer transition-colors relative z-10 ${
-            isOpen
-              ? `mx-2 mb-3 py-2 ${isDark ? 'hover:bg-[#212121]' : 'hover:bg-[#ececec]'}`
-              : `justify-center py-3 ${isDark ? 'hover:bg-[#2f2f2f]' : 'hover:bg-[#e5e5e5]'}`
-          }`}
-        >
-          <div className="w-[52px] flex items-center justify-center flex-shrink-0">
-            <img
-              src="/profile.png"
-              alt="Profile"
-              className="w-9 h-9 rounded-full object-cover"
-            />
-          </div>
-          {isOpen && (
-            <div className="flex flex-col">
-              <span className={`text-[14px] ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>janise kim</span>
-              <span className={`text-[12px] ${isDark ? 'text-[#9a9a9a]' : 'text-[#6b6b6b]'}`}>click to reach out!</span>
-            </div>
-          )}
-        </a>
+      <div className="mt-auto relative z-20">
+        <ProfileMenu isOpen={isOpen} isSidebarOpen={isOpen} />
       </div>
     </aside>
   );

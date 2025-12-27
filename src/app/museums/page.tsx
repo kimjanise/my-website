@@ -7,7 +7,7 @@ export default async function MuseumsPage() {
 
   return (
     <PageLayoutClient posts={posts}>
-      <SubpageContent title="museums" description="Museums and galleries I recommend!" />
+      <SubpageContent title="museums" description="a small curation of art and objects that made me feel something" />
     </PageLayoutClient>
   );
 }
