@@ -11,8 +11,8 @@ export async function POST(req: Request) {
     const formattedMessages = messages.map((msg: UIMessage) => ({
         role: msg.role as 'user' | 'assistant' | 'system',
         content: msg.parts
-            ?.filter((part: { type: string }) => part.type === 'text')
-            .map((part: { type: string; text: string }) => part.text)
+            ?.filter((part): part is { type: 'text'; text: string } => part.type === 'text')
+            .map((part) => part.text)
             .join('') || '',
     }));
 

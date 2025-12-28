@@ -1,15 +1,19 @@
 import { getBlogPosts } from '@/lib/blog';
+import { getPeople } from '@/lib/people';
 import { PageLayoutClient } from '@/components/PageLayoutClient';
 import { SubpageContent } from '@/components/SubpageContent';
 import { PeopleContent } from '@/components/PeopleContent';
 
 export default async function PeoplePage() {
-  const posts = await getBlogPosts();
+  const [posts, people] = await Promise.all([
+    getBlogPosts(),
+    getPeople(),
+  ]);
 
   return (
     <PageLayoutClient posts={posts}>
       <SubpageContent title="people" description="People I admire and follow!">
-        <PeopleContent />
+        <PeopleContent people={people} />
       </SubpageContent>
     </PageLayoutClient>
   );

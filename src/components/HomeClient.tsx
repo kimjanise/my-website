@@ -37,10 +37,11 @@ const UploadIcon = () => (
   </svg>
 );
 
-const UserIcon = () => (
+const HelpIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <circle cx="12" cy="7" r="4" stroke="currentColor" strokeWidth="1.5" />
+    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <circle cx="12" cy="17" r="0.5" fill="currentColor" stroke="currentColor" strokeWidth="1" />
   </svg>
 );
 
@@ -156,7 +157,7 @@ export function HomeClient({ posts }: HomeClientProps) {
 
           <div className="flex items-center gap-1">
             <div className={`cursor-pointer p-2 rounded-lg transition-colors ${isDark ? 'text-[#9a9a9a] hover:bg-[#2f2f2f]' : 'text-[#6b6b6b] hover:bg-[#f0f0f0]'}`}>
-              <UserIcon />
+              <HelpIcon />
             </div>
             <ThemeToggle />
           </div>

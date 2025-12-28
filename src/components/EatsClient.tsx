@@ -40,7 +40,7 @@ export function EatsClient({ places }: EatsClientProps) {
     .filter((place) => activeLocations.length === 0 || activeLocations.includes(place.location));
 
   return (
-    <div className="w-full max-w-3xl py-8 px-6 mx-auto">
+    <div className="w-full max-w-xl py-8 px-6 mx-auto">
       <h1 className={`text-[32px] font-semibold mb-2 ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>eats</h1>
       <p className={`text-[16px] mb-8 ${isDark ? 'text-[#9a9a9a]' : 'text-[#6b6b6b]'}`}>
         where i would take friends + family if they were visiting (see beli!)
@@ -53,7 +53,7 @@ export function EatsClient({ places }: EatsClientProps) {
             onClick={() => setActiveCategory(category)}
             className={`relative px-4 py-2 text-[15px] whitespace-nowrap transition-colors ${
               activeCategory === category
-                ? isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'
+                ? isDark ? 'text-[#ececec] font-semibold' : 'text-[#0d0d0d] font-semibold'
                 : isDark ? 'text-[#9a9a9a] hover:text-[#ececec]' : 'text-[#6b6b6b] hover:text-[#0d0d0d]'
             }`}
           >
