@@ -8,7 +8,7 @@ import { useSidebar } from '@/context/SidebarContext';
 import { useTheme } from '@/context/ThemeContext';
 import { useChat } from '@/context/ChatContext';
 import { ProfileMenu } from './ProfileMenu';
-import { LuStar, LuCode, LuMonitor, LuUsers, LuUtensils, LuMusic, LuLandmark } from 'react-icons/lu';
+import { LuStar, LuCode, LuMonitor, LuUsers, LuUtensils, LuLandmark, LuLightbulb } from 'react-icons/lu';
 import { HiOutlinePencilAlt } from 'react-icons/hi';
 
 // OpenAI Logo Icon
@@ -155,11 +155,11 @@ export function Sidebar({ posts }: SidebarProps) {
       <nav className="flex flex-col mt-3">
         <NavItem href="/" icon={<HiOutlinePencilAlt size={20} />} label="new chat" isOpen={isOpen} isDark={isDark} onClick={handleNewChatClick} />
         <NavItem href="/about-me" icon={<LuStar size={20} />} label="about me" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
+        <NavItem href="/values" icon={<LuLightbulb size={20} />} label="values" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
         <NavItem href="/projects" icon={<LuCode size={20} />} label="projects" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
         <NavItem href="/tech" icon={<LuMonitor size={20} />} label="tech" badge="NEW" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
         <NavItem href="/people" icon={<LuUsers size={20} />} label="people" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
         <NavItem href="/eats" icon={<LuUtensils size={20} />} label="eats" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
-        <NavItem href="/music" icon={<LuMusic size={20} />} label="music" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
         <NavItem href="/museums" icon={<LuLandmark size={20} />} label="museums" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
       </nav>
 
@@ -191,7 +191,7 @@ export function Sidebar({ posts }: SidebarProps) {
       {!isOpen && <div className="flex-1" />}
 
       {/* Profile */}
-      <div className="mt-auto relative z-20">
+      <div className={`mt-auto relative z-20 py-1.5 ${isDark ? 'border-t border-[#2f2f2f]' : 'border-t border-[#e5e5e5]'}`}>
         <ProfileMenu isOpen={isOpen} isSidebarOpen={isOpen} />
       </div>
     </aside>

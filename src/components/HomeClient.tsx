@@ -31,6 +31,12 @@ const VoiceIcon = () => (
   </svg>
 );
 
+const UploadIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 19V5M12 5l-6 6M12 5l6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
 const UserIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -159,20 +165,17 @@ export function HomeClient({ posts }: HomeClientProps) {
         {/* Main content area */}
         {!hasMessages ? (
           // Welcome screen - centered
-          <div className="flex-1 flex flex-col items-center justify-center px-4 -mt-16">
+          <div className="flex-1 flex flex-col items-center justify-center px-4 -mt-24">
             <h1 className={`text-[32px] font-normal mb-8 tracking-tight ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>
               hi! i&apos;m janise :)
             </h1>
 
             <div className="w-full max-w-[760px]">
               <form onSubmit={onSubmit}>
-                <div className={`flex items-center rounded-[26px] px-4 py-3 gap-2 ${isDark ? 'bg-[#2f2f2f]' : 'bg-[#f4f4f4] border border-[#e5e5e5]'}`}>
-                  <button
-                    type="button"
-                    className={`transition-colors p-1.5 rounded-full ${isDark ? 'text-[#9a9a9a] hover:text-[#ececec] hover:bg-[#424242]' : 'text-[#6b6b6b] hover:text-[#0d0d0d] hover:bg-[#e5e5e5]'}`}
-                  >
+                <div className={`flex items-center rounded-[26px] pl-3 pr-2 py-2 gap-1 ${isDark ? 'bg-[#2f2f2f]' : 'bg-[#f4f4f4] border border-[#e5e5e5]'}`}>
+                  <div className={`p-1.5 rounded-full ${isDark ? 'text-[#9a9a9a]' : 'text-[#6b6b6b]'}`}>
                     <PlusIcon />
-                  </button>
+                  </div>
 
                   <input
                     ref={inputRef}
@@ -180,25 +183,22 @@ export function HomeClient({ posts }: HomeClientProps) {
                     placeholder="ask about what i'm up to"
                     value={input}
                     onChange={handleInputChange}
-                    className={`flex-1 bg-transparent border-none outline-none text-[15px] ${isDark ? 'text-[#ececec] placeholder:text-[#8e8e8e]' : 'text-[#0d0d0d] placeholder:text-[#9a9a9a]'}`}
+                    className={`flex-1 bg-transparent border-none outline-none text-[15px] px-2 ${isDark ? 'text-[#ececec] placeholder:text-[#8e8e8e]' : 'text-[#0d0d0d] placeholder:text-[#9a9a9a]'}`}
                   />
 
-                  <button
-                    type="button"
-                    className={`transition-colors p-1.5 rounded-full ${isDark ? 'text-[#9a9a9a] hover:text-[#ececec] hover:bg-[#424242]' : 'text-[#6b6b6b] hover:text-[#0d0d0d] hover:bg-[#e5e5e5]'}`}
-                  >
+                  <div className={`p-1.5 rounded-full ${isDark ? 'text-[#9a9a9a]' : 'text-[#6b6b6b]'}`}>
                     <MicrophoneIcon />
-                  </button>
+                  </div>
 
                   <button
                     type="submit"
                     disabled={!input.trim()}
-                    className={`p-2.5 rounded-full transition-colors ml-1 ${input.trim()
-                      ? isDark ? 'bg-white text-black hover:bg-gray-100' : 'bg-[#0d0d0d] text-white hover:bg-[#2f2f2f]'
-                      : isDark ? 'bg-[#676767] text-[#2f2f2f]' : 'bg-[#d5d5d5] text-[#f4f4f4]'
+                    className={`p-2 rounded-full transition-colors ${input.trim()
+                      ? isDark ? 'bg-white text-black hover:bg-gray-100 cursor-pointer' : 'bg-[#0d0d0d] text-white hover:bg-[#2f2f2f] cursor-pointer'
+                      : isDark ? 'bg-[#676767] text-[#2f2f2f] cursor-default' : 'bg-[#d5d5d5] text-[#f4f4f4] cursor-default'
                       }`}
                   >
-                    <VoiceIcon />
+                    {input.trim() ? <UploadIcon /> : <VoiceIcon />}
                   </button>
                 </div>
               </form>
@@ -253,37 +253,30 @@ export function HomeClient({ posts }: HomeClientProps) {
             <div className={`px-4 pb-3 pt-2 ${isDark ? 'bg-[#212121]' : 'bg-white'}`}>
               <div className="max-w-[760px] mx-auto">
                 <form onSubmit={onSubmit}>
-                  <div className={`flex items-center rounded-[26px] px-4 py-3 gap-2 ${isDark ? 'bg-[#2f2f2f]' : 'bg-[#f4f4f4] border border-[#e5e5e5]'}`}>
-                    <button
-                      type="button"
-                      onClick={handleNewChat}
-                      className={`transition-colors p-1.5 rounded-full ${isDark ? 'text-[#9a9a9a] hover:text-[#ececec] hover:bg-[#424242]' : 'text-[#6b6b6b] hover:text-[#0d0d0d] hover:bg-[#e5e5e5]'}`}
-                    >
+                  <div className={`flex items-center rounded-[26px] pl-3 pr-2 py-2 gap-1 ${isDark ? 'bg-[#2f2f2f]' : 'bg-[#f4f4f4] border border-[#e5e5e5]'}`}>
+                    <div className={`p-1.5 rounded-full ${isDark ? 'text-[#9a9a9a]' : 'text-[#6b6b6b]'}`}>
                       <PlusIcon />
-                    </button>
+                    </div>
 
                     <input
                       ref={inputRef}
                       type="text"
-                      placeholder="Ask anything"
+                      placeholder="ask about what i'm up to"
                       value={input}
                       onChange={handleInputChange}
                       disabled={isLoading}
-                      className={`flex-1 bg-transparent border-none outline-none text-[15px] ${isDark ? 'text-[#ececec] placeholder:text-[#8e8e8e]' : 'text-[#0d0d0d] placeholder:text-[#9a9a9a]'}`}
+                      className={`flex-1 bg-transparent border-none outline-none text-[15px] px-2 ${isDark ? 'text-[#ececec] placeholder:text-[#8e8e8e]' : 'text-[#0d0d0d] placeholder:text-[#9a9a9a]'}`}
                     />
 
-                    <button
-                      type="button"
-                      className={`transition-colors p-1.5 rounded-full ${isDark ? 'text-[#9a9a9a] hover:text-[#ececec] hover:bg-[#424242]' : 'text-[#6b6b6b] hover:text-[#0d0d0d] hover:bg-[#e5e5e5]'}`}
-                    >
+                    <div className={`p-1.5 rounded-full ${isDark ? 'text-[#9a9a9a]' : 'text-[#6b6b6b]'}`}>
                       <MicrophoneIcon />
-                    </button>
+                    </div>
 
                     {isLoading ? (
                       <button
                         type="button"
                         onClick={stop}
-                        className={`p-2.5 rounded-full transition-colors ml-1 ${isDark ? 'bg-white text-black hover:bg-gray-100' : 'bg-[#0d0d0d] text-white hover:bg-[#2f2f2f]'}`}
+                        className={`p-2 rounded-full transition-colors cursor-pointer ${isDark ? 'bg-[#676767] text-white hover:bg-[#5a5a5a]' : 'bg-[#e5e5e5] text-[#0d0d0d] hover:bg-[#d5d5d5]'}`}
                       >
                         <StopIcon />
                       </button>
@@ -291,12 +284,12 @@ export function HomeClient({ posts }: HomeClientProps) {
                       <button
                         type="submit"
                         disabled={!input.trim()}
-                        className={`p-2.5 rounded-full transition-colors ml-1 ${input.trim()
-                          ? isDark ? 'bg-white text-black hover:bg-gray-100' : 'bg-[#0d0d0d] text-white hover:bg-[#2f2f2f]'
-                          : isDark ? 'bg-[#676767] text-[#2f2f2f]' : 'bg-[#d5d5d5] text-[#f4f4f4]'
+                        className={`p-2 rounded-full transition-colors ${input.trim()
+                          ? isDark ? 'bg-white text-black hover:bg-gray-100 cursor-pointer' : 'bg-[#0d0d0d] text-white hover:bg-[#2f2f2f] cursor-pointer'
+                          : isDark ? 'bg-[#676767] text-[#2f2f2f] cursor-default' : 'bg-[#d5d5d5] text-[#f4f4f4] cursor-default'
                           }`}
                       >
-                        <VoiceIcon />
+                        {input.trim() ? <UploadIcon /> : <VoiceIcon />}
                       </button>
                     )}
                   </div>
@@ -304,7 +297,7 @@ export function HomeClient({ posts }: HomeClientProps) {
 
                 {/* Disclaimer text */}
                 <p className={`text-center text-[12px] mt-2 ${isDark ? 'text-[#9a9a9a]' : 'text-[#6b6b6b]'}`}>
-                  ChatGPT can make mistakes. Check important info.
+                  this feature's a work in progress! any feedback is appreciated :)
                 </p>
               </div>
             </div>

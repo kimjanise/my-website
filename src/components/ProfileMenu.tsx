@@ -41,7 +41,7 @@ export function ProfileMenu({ isOpen: isSidebarExpanded }: ProfileMenuProps) {
   ];
 
   return (
-    <div className={`relative mb-3 ${isSidebarExpanded ? 'px-[10px]' : 'px-[8px]'}`} ref={menuRef}>
+    <div className={`relative ${isSidebarExpanded ? 'px-[8px]' : 'px-[8px]'}`} ref={menuRef}>
       <button
         type="button"
         onClick={(e) => {
@@ -49,7 +49,7 @@ export function ProfileMenu({ isOpen: isSidebarExpanded }: ProfileMenuProps) {
           setIsOpen(!isOpen);
         }}
         className={`flex items-center rounded-lg cursor-pointer transition-colors ${isSidebarExpanded
-          ? `flex-1 w-full py-1.5 ${isDark ? 'hover:bg-[#212121]' : 'hover:bg-[#ececec]'}`
+          ? `flex-1 w-full py-1 ${isDark ? 'hover:bg-[#212121]' : 'hover:bg-[#ececec]'}`
           : `w-[36px] h-[36px] justify-center ${isDark ? 'hover:bg-[#2f2f2f]' : 'hover:bg-[#e5e5e5]'}`
           }`}
       >
@@ -70,7 +70,7 @@ export function ProfileMenu({ isOpen: isSidebarExpanded }: ProfileMenuProps) {
 
       {isOpen && (
         <div
-          className={`fixed bottom-16 left-[10px] w-[240px] rounded-xl shadow-lg border z-50 ${isDark
+          className={`fixed bottom-16 left-[8px] w-[244px] rounded-xl shadow-lg border z-50 ${isDark
             ? 'bg-[#2f2f2f] border-[#424242]'
             : 'bg-white border-[#e5e5e5]'
             }`}
