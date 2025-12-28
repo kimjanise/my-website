@@ -17,7 +17,7 @@ export default async function PeoplePage() {
 
   return (
     <PageLayoutClient posts={posts}>
-      <SubpageContent title="people" description="People I admire and follow!">
+      <SubpageContent title="people" description="an incomplete list of friends + family, mentors, and role models that shape me">
         <PeopleContent people={people} />
       </SubpageContent>
     </PageLayoutClient>

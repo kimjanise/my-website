@@ -17,7 +17,7 @@ export default async function ValuesPage() {
 
   return (
     <PageLayoutClient posts={posts}>
-      <SubpageContent title="values" description="Values I live by!">
+      <SubpageContent title="values" description="things that keeps me up at night">
         <ValuesContent values={values} />
       </SubpageContent>
     </PageLayoutClient>

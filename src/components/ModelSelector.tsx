@@ -64,7 +64,9 @@ export function ModelSelector() {
         <span className={`font-normal text-[18px] ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>
           janiseGPT 5.2
         </span>
-        <ChevronDownIcon />
+        <span className={isDark ? 'text-[#9a9a9a]' : 'text-[#6b6b6b]'}>
+          <ChevronDownIcon />
+        </span>
       </button>
 
       {isOpen && (

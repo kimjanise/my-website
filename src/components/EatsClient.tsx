@@ -43,7 +43,7 @@ export function EatsClient({ places }: EatsClientProps) {
     <div className="w-full max-w-xl py-8 px-6 mx-auto">
       <h1 className={`text-[32px] font-semibold mb-2 ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>eats</h1>
       <p className={`text-[16px] mb-8 ${isDark ? 'text-[#9a9a9a]' : 'text-[#6b6b6b]'}`}>
-        where i would take friends + family if they were visiting (see beli!)
+        where i would take someone if they were visiting me (see beli!)
       </p>
 
       <div className="flex gap-1 mb-8">
