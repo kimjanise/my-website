@@ -1,8 +1,10 @@
 'use client';
 
+import { useState } from 'react';
 import { Sidebar } from './Sidebar';
 import { ThemeToggle } from './ThemeToggle';
 import { ModelSelector } from './ModelSelector';
+import { HelpModal } from './HelpModal';
 import type { BlogPostSummary } from '@/types/blog';
 import { useTheme } from '@/context/ThemeContext';
 
@@ -22,6 +24,7 @@ interface PageLayoutClientProps {
 export function PageLayoutClient({ posts, children }: PageLayoutClientProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
+  const [showHelpModal, setShowHelpModal] = useState(false);
 
   return (
     <div className={`flex h-screen w-full ${isDark ? 'bg-[#212121]' : 'bg-white'}`}>
@@ -32,12 +35,16 @@ export function PageLayoutClient({ posts, children }: PageLayoutClientProps) {
             <ModelSelector />
           </div>
           <div className="flex items-center gap-1">
-            <div className={`cursor-pointer p-2 rounded-lg transition-colors ${isDark ? 'text-[#9a9a9a] hover:bg-[#2f2f2f]' : 'text-[#6b6b6b] hover:bg-[#f0f0f0]'}`}>
+            <button
+              onClick={() => setShowHelpModal(true)}
+              className={`cursor-pointer p-2 rounded-lg transition-colors ${isDark ? 'text-[#9a9a9a] hover:bg-[#2f2f2f]' : 'text-[#6b6b6b] hover:bg-[#f0f0f0]'}`}
+            >
               <HelpIcon />
-            </div>
+            </button>
             <ThemeToggle />
           </div>
         </header>
+        <HelpModal isOpen={showHelpModal} onClose={() => setShowHelpModal(false)} />
         <div className="flex-1 w-full overflow-y-auto flex justify-center pb-16">
           {children}
         </div>

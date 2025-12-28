@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ChatGPT",
-  description: "ChatGPT Clone",
+  title: "janise kim",
+  description: "janise kim's personal website",
 };
 
 export default function RootLayout({

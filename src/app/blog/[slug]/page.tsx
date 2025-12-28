@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   }
 
   return {
-    title: post.title,
+    title: `janise kim • ${post.title}`,
     description: post.content.slice(0, 160),
   };
 }
