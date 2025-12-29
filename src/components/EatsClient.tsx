@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import type { Place, LocationTag } from '@/types/eats';
 import { useTheme } from '@/context/ThemeContext';
+import { PageContainer } from './PageContainer';
 
 const categories = ['all', 'restaurants', 'bakeries', 'coffee + tea', 'bars'] as const;
 
@@ -40,7 +41,7 @@ export function EatsClient({ places }: EatsClientProps) {
     .filter((place) => activeLocations.length === 0 || activeLocations.includes(place.location));
 
   return (
-    <div className="w-full max-w-xl py-8 px-6 mx-auto">
+    <PageContainer>
       <h1 className={`text-[32px] font-semibold mb-2 ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>eats</h1>
       <p className={`text-[16px] mb-6 ${isDark ? 'text-[#9a9a9a]' : 'text-[#6b6b6b]'}`}>
         where i would take someone if they were visiting me (see beli!)
@@ -104,7 +105,6 @@ export function EatsClient({ places }: EatsClientProps) {
           </div>
         ))}
       </div>
-      <div className="h-16" />
-    </div>
+    </PageContainer>
   );
 }

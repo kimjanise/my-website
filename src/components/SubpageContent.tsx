@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useTheme } from '@/context/ThemeContext';
+import { PageContainer } from './PageContainer';
 
 const stars = ['✺', '✱', '✢', '◦', '✢', '✱'];
 
@@ -44,13 +45,12 @@ export function SubpageContent({ title, description, animatedDescription, wide, 
   };
 
   return (
-    <div className={`w-full py-8 px-6 mx-auto ${wide ? 'max-w-3xl' : 'max-w-xl'}`}>
+    <PageContainer wide={wide}>
       <h1 className={`text-[32px] font-semibold mb-2 ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>{title}</h1>
       <p className={`text-[16px] mb-6 ${!animatedDescription ? (isDark ? 'text-[#9a9a9a]' : 'text-[#6b6b6b]') : ''}`}>
         {renderDescription()}
       </p>
       {children}
-      <div className="h-16" />
-    </div>
+    </PageContainer>
   );
 }

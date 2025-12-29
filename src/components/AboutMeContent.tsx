@@ -1,13 +1,14 @@
 'use client';
 
 import { useTheme } from '@/context/ThemeContext';
+import { PageContainer } from './PageContainer';
 
 export function AboutMeContent() {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
   return (
-    <div className="w-full max-w-3xl py-8 px-6 mx-auto">
+    <PageContainer wide>
       <h1 className={`text-[32px] font-semibold mb-6 ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>
         about me
       </h1>
@@ -27,7 +28,6 @@ export function AboutMeContent() {
       <div className={`mt-6 text-[15px] leading-relaxed ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>
         <p>Your about me text goes here...</p>
       </div>
-      <div className="h-16" />
-    </div>
+    </PageContainer>
   );
 }
