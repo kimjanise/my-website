@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getBlogPosts } from '@/lib/blog';
 import { PageLayoutClient } from '@/components/PageLayoutClient';
-import { SubpageContent } from '@/components/SubpageContent';
+import { AboutMeContent } from '@/components/AboutMeContent';
 
 export const metadata: Metadata = {
   title: 'janise kim • about me',
@@ -12,7 +12,7 @@ export default async function AboutMePage() {
 
   return (
     <PageLayoutClient posts={posts}>
-      <SubpageContent title="about me" description="..." />
+      <AboutMeContent />
     </PageLayoutClient>
   );
 }

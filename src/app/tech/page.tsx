@@ -12,7 +12,7 @@ export default async function TechPage() {
 
   return (
     <PageLayoutClient posts={posts}>
-      <SubpageContent title="tech" description="Tech inspiration and resources!" />
+      <SubpageContent title="tech" description="a brain dump of cool research, articles, startups, and more" />
     </PageLayoutClient>
   );
 }

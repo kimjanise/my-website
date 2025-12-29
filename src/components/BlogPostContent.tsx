@@ -27,6 +27,7 @@ export function BlogPostContent({ title, createdAt, content }: BlogPostContentPr
       <div className={`text-[16px] leading-relaxed whitespace-pre-wrap ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>
         {content}
       </div>
+      <div className="h-16" />
     </article>
   );
 }

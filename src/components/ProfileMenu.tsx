@@ -62,8 +62,8 @@ export function ProfileMenu({ isOpen: isSidebarExpanded }: ProfileMenuProps) {
         </div>
         {isSidebarExpanded && (
           <div className="flex flex-col text-left pl-2">
-            <span className={`text-[14px] ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>janise kim</span>
-            <span className={`text-[12px] ${isDark ? 'text-[#9a9a9a]' : 'text-[#6b6b6b]'}`}>Plus</span>
+            <span className={`text-[14px] leading-tight ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>janise kim</span>
+            <span className={`text-[12px] leading-tight -mt-[1px] ${isDark ? 'text-[#9a9a9a]' : 'text-[#6b6b6b]'}`}>Plus</span>
           </div>
         )}
       </button>

@@ -84,3 +84,36 @@ input::placeholder {
     transform: scale(1.4);
   }
 }
+
+/* Claude Code thinking animation */
+@keyframes shimmer {
+  0% {
+    background-position: 200% center;
+  }
+
+  100% {
+    background-position: -200% center;
+  }
+}
+
+.animate-thinking-star {
+  display: inline-block;
+  color: #e27a53;
+  font-family: Monaco, "Courier New", Courier, monospace;
+}
+
+.animate-thinking-text {
+  font-family: Monaco, "Courier New", Courier, monospace;
+  font-weight: 500;
+  background: linear-gradient(90deg,
+      #e27a53 0%,
+      #e27a53 40%,
+      #f5a882 50%,
+      #e27a53 60%,
+      #e27a53 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 2s steps(12) infinite;
+}
