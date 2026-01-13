@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useTheme } from '@/context/ThemeContext';
 import { PageContainer } from './PageContainer';
 
-const stars = ['✺', '✱', '✢', '◦', '✢', '✱'];
+const stars = ['✹', '✱', '✢', '◦', '✢'];
 
 function AnimatedStar() {
   const [index, setIndex] = useState(0);
@@ -12,7 +12,7 @@ function AnimatedStar() {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % stars.length);
-    }, 300);
+    }, 175);
     return () => clearInterval(interval);
   }, []);
 

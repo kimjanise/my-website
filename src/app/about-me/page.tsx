@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getBlogPosts } from '@/lib/blog';
+import { getExperiences } from '@/lib/experiences';
 import { PageLayoutClient } from '@/components/PageLayoutClient';
 import { AboutMeContent } from '@/components/AboutMeContent';
 
@@ -8,11 +9,14 @@ export const metadata: Metadata = {
 };
 
 export default async function AboutMePage() {
-  const posts = await getBlogPosts();
+  const [posts, experiences] = await Promise.all([
+    getBlogPosts(),
+    getExperiences(),
+  ]);
 
   return (
     <PageLayoutClient posts={posts}>
-      <AboutMeContent />
+      <AboutMeContent experiences={experiences} />
     </PageLayoutClient>
   );
 }
