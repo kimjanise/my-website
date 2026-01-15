@@ -25,8 +25,8 @@ function ProjectCard({ project, onClick, isDark }: { project: Project; onClick: 
     <button
       onClick={onClick}
       className={`flex flex-col rounded-lg border text-left transition-colors overflow-hidden ${isDark
-          ? 'bg-[#2f2f2f] border-[#424242] hover:bg-[#3a3a3a]'
-          : 'bg-[#f5f5f5] border-[#e5e5e5] hover:bg-[#ebebeb]'
+        ? 'bg-[#2f2f2f] border-[#424242] hover:bg-[#3a3a3a]'
+        : 'bg-[#f5f5f5] border-[#e5e5e5] hover:bg-[#ebebeb]'
         }`}
     >
       {/* Top - Preview/Graphic */}
@@ -198,7 +198,7 @@ export function ProjectsContent({ projects }: ProjectsContentProps) {
         work
       </h1>
       <p className={`text-[16px] mb-6 ${isDark ? 'text-[#9a9a9a]' : 'text-[#6b6b6b]'}`}>
-        some things i've built or contributed to recently
+        some things i've worked on or shipped recently
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
