@@ -157,10 +157,10 @@ export function Sidebar({ posts }: SidebarProps) {
           <NavItem href="/" icon={<HiOutlinePencilAlt size={20} />} label="new chat" isOpen={isOpen} isDark={isDark} onClick={handleNewChatClick} />
           <NavItem href="/about-me" icon={<LuStar size={20} />} label="about me" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
           <NavItem href="/values" icon={<LuLightbulb size={20} />} label="values" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
-          <NavItem href="/projects" icon={<LuCode size={20} />} label="projects" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
+          <NavItem href="/work" icon={<LuCode size={20} />} label="work" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
           {/* <NavItem href="/tech" icon={<LuMonitor size={20} />} label="tech" badge="NEW" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} /> */}
           <NavItem href="/people" icon={<LuUsers size={20} />} label="people" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
-          <NavItem href="/eats" icon={<LuUtensils size={20} />} label="eats" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
+          <NavItem href="/eats" icon={<LuUtensils size={20} />} label="eats" badge="NEW" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
           {/* <NavItem href="/museums" icon={<LuLandmark size={20} />} label="museums" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} /> */}
         </nav>
       </div>

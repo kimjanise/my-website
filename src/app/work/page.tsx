@@ -5,7 +5,7 @@ import { PageLayoutClient } from '@/components/PageLayoutClient';
 import { ProjectsContent } from '@/components/ProjectsContent';
 
 export const metadata: Metadata = {
-  title: 'janise kim • projects',
+  title: 'janise kim • work',
 };
 
 export default async function ProjectsPage() {
