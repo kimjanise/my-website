@@ -3,6 +3,7 @@ export interface Project {
   title: string;
   short_description: string;
   bullet_points: string[] | null;
+  documentation: string | null;
   icon_url: string | null;
   category: string;
   date: string | null;

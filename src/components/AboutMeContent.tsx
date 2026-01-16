@@ -19,7 +19,7 @@ export function AboutMeContent() {
       <div className={`text-[15px] leading-relaxed ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>
         <ol className="list-decimal list-outside ml-5 space-y-4">
           <li>
-            <span>ai engineer + tinkerer interested in , and ai alignment.</span>
+            <span>ai engineer + ... interested in , and ai alignment.</span>
           </li>
           <li>
             <span>studying <a href="https://www.cs.cmu.edu/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:opacity-70">cs</a> + <a href="https://www.cmu.edu/swartz-center-for-entrepreneurship/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:opacity-70">entrepreneurship</a> as a <a href="https://www.cmu.edu/swartz-center-for-entrepreneurship/mentorship-and-learning/undergraduate-innovation-scholars/index.html" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:opacity-70">swartz innovation scholar</a> @ <a href="https://www.cmu.edu/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:opacity-70">carnegie mellon university</a></span>

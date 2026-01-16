@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useTheme } from '@/context/ThemeContext';
 import { PageContainer } from './PageContainer';
+import ReactMarkdown from 'react-markdown';
 import type { Project } from '@/types/projects';
 
 interface ProjectsContentProps {
@@ -70,6 +71,9 @@ function ProjectCard({ project, onClick, isDark }: { project: Project; onClick: 
 }
 
 function ProjectModal({ project, onClose, isDark }: { project: Project; onClose: () => void; isDark: boolean }) {
+  const [documentation, setDocumentation] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -78,13 +82,35 @@ function ProjectModal({ project, onClose, isDark }: { project: Project; onClose:
     return () => document.removeEventListener('keydown', handleEscape);
   }, [onClose]);
 
+  useEffect(() => {
+    if (!project.documentation) {
+      setIsLoading(false);
+      return;
+    }
+
+    async function fetchDocumentation() {
+      try {
+        const response = await fetch(project.documentation!);
+        if (response.ok) {
+          const text = await response.text();
+          setDocumentation(text);
+        }
+      } catch (error) {
+        // File doesn't exist, that's fine
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchDocumentation();
+  }, [project.documentation_path]);
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
       onClick={onClose}
     >
       <div
-        className={`relative w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl p-6 ${isDark ? 'bg-[#212121]' : 'bg-white'
+        className={`relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl p-8 ${isDark ? 'bg-[#212121]' : 'bg-white'
           }`}
         onClick={(e) => e.stopPropagation()}
       >
@@ -174,14 +200,60 @@ function ProjectModal({ project, onClose, isDark }: { project: Project; onClose:
         {/* Divider */}
         <div className={`border-t my-6 ${isDark ? 'border-[#424242]' : 'border-[#e5e5e5]'}`} />
 
-        {/* Bullet Points */}
-        {project.bullet_points && project.bullet_points.length > 0 && (
-          <ul className={`list-disc list-outside ml-5 space-y-2 text-[15px] leading-relaxed ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>
-            {project.bullet_points.map((point, index) => (
-              <li key={index}>{point}</li>
-            ))}
-          </ul>
-        )}
+        {/* Documentation */}
+        {isLoading ? (
+          <div className={`text-[14px] ${isDark ? 'text-[#8e8e8e]' : 'text-[#9a9a9a]'}`}>
+            Loading...
+          </div>
+        ) : documentation ? (
+          <div className={`prose max-w-none ${isDark ? 'prose-invert' : ''}`}>
+            <ReactMarkdown
+              components={{
+                h1: ({ children }) => <h1 className={`text-2xl font-bold mt-6 mb-3 ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>{children}</h1>,
+                h2: ({ children }) => <h2 className={`text-xl font-semibold mt-5 mb-2 ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>{children}</h2>,
+                h3: ({ children }) => <h3 className={`text-lg font-medium mt-4 mb-2 ${isDark ? 'text-[#ececec]' : 'text-[#0d0d0d]'}`}>{children}</h3>,
+                p: ({ children }) => <p className={`text-[15px] leading-relaxed mb-4 ${isDark ? 'text-[#d4d4d4]' : 'text-[#333]'}`}>{children}</p>,
+                ul: ({ children }) => <ul className={`list-disc list-outside ml-5 space-y-1 mb-4 ${isDark ? 'text-[#d4d4d4]' : 'text-[#333]'}`}>{children}</ul>,
+                ol: ({ children }) => <ol className={`list-decimal list-outside ml-5 space-y-1 mb-4 ${isDark ? 'text-[#d4d4d4]' : 'text-[#333]'}`}>{children}</ol>,
+                li: ({ children }) => <li className="text-[15px] leading-relaxed">{children}</li>,
+                img: ({ src, alt }) => (
+                  <img
+                    src={src}
+                    alt={alt || ''}
+                    className="rounded-lg my-4 max-w-full h-auto"
+                  />
+                ),
+                a: ({ href, children }) => (
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`underline underline-offset-2 hover:opacity-70 ${isDark ? 'text-blue-400' : 'text-blue-600'}`}
+                  >
+                    {children}
+                  </a>
+                ),
+                blockquote: ({ children }) => (
+                  <blockquote className={`border-l-4 pl-4 my-4 italic ${isDark ? 'border-[#424242] text-[#9a9a9a]' : 'border-[#e5e5e5] text-[#6b6b6b]'}`}>
+                    {children}
+                  </blockquote>
+                ),
+                code: ({ children }) => (
+                  <code className={`px-1.5 py-0.5 rounded text-sm ${isDark ? 'bg-[#2f2f2f] text-[#e0e0e0]' : 'bg-[#f0f0f0] text-[#333]'}`}>
+                    {children}
+                  </code>
+                ),
+                pre: ({ children }) => (
+                  <pre className={`p-4 rounded-lg overflow-x-auto my-4 text-sm ${isDark ? 'bg-[#1a1a1a]' : 'bg-[#f5f5f5]'}`}>
+                    {children}
+                  </pre>
+                ),
+              }}
+            >
+              {documentation}
+            </ReactMarkdown>
+          </div>
+        ) : null}
       </div>
     </div>
   );
@@ -198,7 +270,7 @@ export function ProjectsContent({ projects }: ProjectsContentProps) {
         work
       </h1>
       <p className={`text-[16px] mb-6 ${isDark ? 'text-[#9a9a9a]' : 'text-[#6b6b6b]'}`}>
-        some things i've worked on or shipped recently
+        some things i've shipped or contributed to recently
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
