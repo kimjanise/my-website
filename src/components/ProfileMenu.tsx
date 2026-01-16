@@ -7,11 +7,10 @@ import { RiTwitterXLine } from 'react-icons/ri';
 import { PiHamburger } from 'react-icons/pi';
 
 interface ProfileMenuProps {
-  isOpen: boolean;
-  isSidebarOpen: boolean;
+  isSidebarExpanded: boolean;
 }
 
-export function ProfileMenu({ isOpen: isSidebarExpanded }: ProfileMenuProps) {
+export function ProfileMenu({ isSidebarExpanded }: ProfileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();

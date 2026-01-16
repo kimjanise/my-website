@@ -8,7 +8,7 @@ import { useSidebar } from '@/context/SidebarContext';
 import { useTheme } from '@/context/ThemeContext';
 import { useChat } from '@/context/ChatContext';
 import { ProfileMenu } from './ProfileMenu';
-import { LuStar, LuCode, LuMonitor, LuUsers, LuUtensils, LuLandmark, LuLightbulb } from 'react-icons/lu';
+import { LuStar, LuCode, LuUsers, LuUtensils, LuLightbulb } from 'react-icons/lu';
 import { HiOutlinePencilAlt } from 'react-icons/hi';
 
 // OpenAI Logo Icon
@@ -158,10 +158,8 @@ export function Sidebar({ posts }: SidebarProps) {
           <NavItem href="/about-me" icon={<LuStar size={20} />} label="about me" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
           <NavItem href="/values" icon={<LuLightbulb size={20} />} label="values" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
           <NavItem href="/work" icon={<LuCode size={20} />} label="work" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
-          {/* <NavItem href="/tech" icon={<LuMonitor size={20} />} label="tech" badge="NEW" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} /> */}
           <NavItem href="/people" icon={<LuUsers size={20} />} label="people" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
           <NavItem href="/eats" icon={<LuUtensils size={20} />} label="eats" badge="NEW" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} />
-          {/* <NavItem href="/museums" icon={<LuLandmark size={20} />} label="museums" isOpen={isOpen} isDark={isDark} onClick={stopPropagation} /> */}
         </nav>
       </div>
 
@@ -194,7 +192,7 @@ export function Sidebar({ posts }: SidebarProps) {
 
       {/* Profile */}
       <div className={`mt-auto relative z-20 py-1.5 ${isDark ? 'border-t border-[#2f2f2f]' : 'border-t border-[#e5e5e5]'}`}>
-        <ProfileMenu isOpen={isOpen} isSidebarOpen={isOpen} />
+        <ProfileMenu isSidebarExpanded={isOpen} />
       </div>
     </aside>
   );

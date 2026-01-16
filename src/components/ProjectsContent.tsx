@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useTheme } from '@/context/ThemeContext';
-import { PageContainer } from './PageContainer';
 import ReactMarkdown from 'react-markdown';
 import type { Project } from '@/types/projects';
 
@@ -102,7 +101,7 @@ function ProjectModal({ project, onClose, isDark }: { project: Project; onClose:
       }
     }
     fetchDocumentation();
-  }, [project.documentation_path]);
+  }, [project.documentation]);
 
   return (
     <div
